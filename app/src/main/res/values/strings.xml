@@ -3,4 +3,10 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="title_search">Search</string>
+    <string name="Filter">Filter</string>
+    <string name="media_title">Media Title</string>
+    <string name="availableOn">Available On %s:</string>
+
 </resources>
