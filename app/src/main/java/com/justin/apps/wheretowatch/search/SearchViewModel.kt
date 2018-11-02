@@ -1,4 +1,4 @@
-package com.justin.apps.wheretowatch
+package com.justin.apps.wheretowatch.search
 
 import android.arch.lifecycle.ViewModel
 

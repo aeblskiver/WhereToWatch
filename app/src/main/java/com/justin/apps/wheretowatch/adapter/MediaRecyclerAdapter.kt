@@ -1,7 +1,6 @@
 package com.justin.apps.wheretowatch.adapter
 
 import android.content.Context
-import android.media.Image
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +12,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.model.Model
-import com.justin.apps.wheretowatch.network.MediaResponse
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.item_media.view.*
 
