@@ -5,6 +5,8 @@ import com.justin.apps.wheretowatch.network.MediaApi
 import com.justin.apps.wheretowatch.network.MediaResponse
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 /**

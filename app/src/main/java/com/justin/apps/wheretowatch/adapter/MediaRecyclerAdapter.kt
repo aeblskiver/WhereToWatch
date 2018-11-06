@@ -13,9 +13,18 @@ import com.bumptech.glide.request.RequestOptions
 import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.model.Model
 import io.reactivex.Observable
+import io.reactivex.Single
 import kotlinx.android.synthetic.main.item_media.view.*
 
-class ListRecyclerAdapter(val list :List<Model.Media>) : RecyclerView.Adapter<ListRecyclerAdapter.ListViewHolder>() {
+class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewHolder>() {
+//var list :List<Model.Media>
+
+    private var list: List<Model.Media> = emptyList()
+
+    fun setList(list: List<Model.Media>) {
+        this.list = list
+        notifyDataSetChanged()
+    }
     /*
         Called when RecyclerView needs a new ViewHolder of the given type to represent an item
         @param parent - Parent viewgroup
