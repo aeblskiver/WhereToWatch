@@ -2,6 +2,7 @@ package com.justin.apps.wheretowatch.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,9 +18,8 @@ import io.reactivex.Single
 import kotlinx.android.synthetic.main.item_media.view.*
 
 class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewHolder>() {
-//var list :List<Model.Media>
 
-    private var list: List<Model.Media> = emptyList()
+    private var list: List<Model.Media> = mutableListOf()
 
     fun setList(list: List<Model.Media>) {
         this.list = list
@@ -59,18 +59,24 @@ class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewH
             .map {
                 it.name to it.icon
 //                it.name + ',' + it.icon
+                Log.d("MediaRecyclerAdapter", "it: ${it.name} and ${it.icon}")
             }
-            .toList()
-            .subscribe{ s ->
-                val (name, icon) = s
-                val image = ImageView(holder.context)
-                Glide.with(image)
-                    .load(icon)
-                    .into(image)
-                holder.linearLayoutLocations.addView(image)
-                holder.tvMediaAvailableOn.text = holder.itemView.context.getString(R.string.availableOn, name)
+            .subscribe{ map ->
+                Log.d("MediaRecyclerAdapter", "s: $map")
+            }
 
-            }
+
+//        { s ->
+//                Log.d("MediaRecyclerAdapter", "s: ${s.toString()}")
+//                val (name, icon) = s
+//                val image = ImageView(holder.context)
+//                Glide.with(image)
+//                    .load(icon)
+//                    .into(image)
+//                holder.linearLayoutLocations.addView(image)
+//                holder.tvMediaAvailableOn.text = holder.itemView.context.getString(R.string.availableOn, name.toString())
+//
+//            }
     }
 
     class ListViewHolder(view: View) : RecyclerView.ViewHolder(view) {

@@ -9,7 +9,7 @@ import com.justin.apps.wheretowatch.repository.MediaRepository
 import io.reactivex.Single
 
 class SearchViewModel(val repo: MediaRepository) : ViewModel() {
-    var mediaList: Single<List<Model.Media>>? = null
+    lateinit var mediaList: Single<List<Model.Media>>
 
     val searchTerm: String? = null
 
