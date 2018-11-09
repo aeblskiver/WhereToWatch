@@ -44,6 +44,7 @@ dependencies {
 
     //Moshi
     implementation "com.squareup.moshi:moshi:$moshi_version"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
 
     //Rxandroid
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"

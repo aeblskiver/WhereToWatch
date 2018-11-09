@@ -29,7 +29,7 @@ class Model {
      * @property icon url for icon image
      */
     data class Location(
-        @Json(name = "display_name") val displayName: String,
+        @field:Json(name = "display_name") val displayName: String,
         val name: String,
         val url: String,
         val id: String,

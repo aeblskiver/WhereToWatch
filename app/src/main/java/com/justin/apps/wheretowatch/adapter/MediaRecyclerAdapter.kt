@@ -2,6 +2,9 @@ package com.justin.apps.wheretowatch.adapter
 
 import android.app.ActionBar
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.ActionBarOverlayLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -21,6 +24,7 @@ import com.justin.apps.wheretowatch.model.Model
 import io.reactivex.Observable
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.item_media.view.*
+import java.lang.Exception
 
 class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewHolder>() {
 
@@ -69,25 +73,42 @@ class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewH
                 it.tvMediaAvailableOn.visibility = if (it.tvMediaAvailableOn.visibility == View.GONE) View.VISIBLE else View.GONE
                 it.linearLayoutLocations.visibility = if (it.linearLayoutLocations.visibility == View.GONE) View.VISIBLE else View.GONE
             }
-
-//            holder.tvMediaAvailableOn.let { tv ->
-//                tv.visibility = if (tv.visibility == View.GONE) View.VISIBLE else View.GONE
-//            }
         }
 
         list[position].locations.forEach {
             val name = it.name
             val icon = it.icon
+            val displayName = it.displayName
+            val url = it.url
 
-            Log.d("MediaRecyclerAdapter", "Name: $name + Icon: $icon")
+            Log.d("MediaRecyclerAdapter", "Name: $name + Icon: $icon + Display Name: ${it.displayName}")
 
             val image = ImageView(holder.context)
             image.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f)
+            image.setOnClickListener {
+                when (displayName) {
+                    "Netflix" -> netflixIntent(url)
+                }
+            }
             Glide.with(image.context)
                 .load(icon)
                 .into(image)
             holder.linearLayoutLocations.addView(image)
 
+        }
+    }
+
+    private fun netflixIntent(url: String) {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.setClassName("com.netflix.mediaclient", "com.netflix.mediaclient.ui.launch.UIWebViewActivity")
+            intent.data = Uri.parse(url)
+            startActivity(rv.context, intent, null)
+        } catch (e: Exception) {
+            Log.d("RecyclerAdapter", "Error: $e")
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            startActivity(rv.context, intent, null)
         }
     }
 
