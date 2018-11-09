@@ -103,6 +103,7 @@ class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewH
             val intent = Intent(Intent.ACTION_VIEW)
             intent.setClassName("com.netflix.mediaclient", "com.netflix.mediaclient.ui.launch.UIWebViewActivity")
             intent.data = Uri.parse(url)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(rv.context, intent, null)
         } catch (e: Exception) {
             Log.d("RecyclerAdapter", "Error: $e")
