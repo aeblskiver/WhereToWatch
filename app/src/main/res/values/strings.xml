@@ -7,6 +7,6 @@
     <string name="title_search">Search</string>
     <string name="Filter">Filter</string>
     <string name="media_title">Media Title</string>
-    <string name="availableOn">Available On %s:</string>
+    <string name="availableOn">Available On:</string>
 
 </resources>

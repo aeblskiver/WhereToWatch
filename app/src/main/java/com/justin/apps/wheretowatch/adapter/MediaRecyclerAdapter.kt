@@ -1,7 +1,12 @@
 package com.justin.apps.wheretowatch.adapter
 
+import android.app.ActionBar
 import android.content.Context
+import android.support.v7.widget.ActionBarOverlayLayout
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -20,16 +25,24 @@ import kotlinx.android.synthetic.main.item_media.view.*
 class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewHolder>() {
 
     private var list: List<Model.Media> = mutableListOf()
+    private lateinit var rv: RecyclerView;
 
     fun setList(list: List<Model.Media>) {
         this.list = list
         notifyDataSetChanged()
     }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+
+        rv = recyclerView
+    }
+
     /*
-        Called when RecyclerView needs a new ViewHolder of the given type to represent an item
-        @param parent - Parent viewgroup
-        @param viewType -
-     */
+            Called when RecyclerView needs a new ViewHolder of the given type to represent an item
+            @param parent - Parent viewgroup
+            @param viewType -
+         */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_media, parent, false)
 
@@ -49,34 +62,33 @@ class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewH
             .apply(RequestOptions.fitCenterTransform())
             .into(holder.ivMediaView)
 
-        holder.ivMediaView.setOnClickListener {
-            holder.tvMediaAvailableOn.also {
-                it.visibility = if (it.visibility == View.GONE) View.VISIBLE else View.GONE
+        holder.ivMediaView.setOnClickListener { _ ->
+
+            TransitionManager.beginDelayedTransition(rv, AutoTransition())
+            holder.let { it ->
+                it.tvMediaAvailableOn.visibility = if (it.tvMediaAvailableOn.visibility == View.GONE) View.VISIBLE else View.GONE
+                it.linearLayoutLocations.visibility = if (it.linearLayoutLocations.visibility == View.GONE) View.VISIBLE else View.GONE
             }
+
+//            holder.tvMediaAvailableOn.let { tv ->
+//                tv.visibility = if (tv.visibility == View.GONE) View.VISIBLE else View.GONE
+//            }
         }
 
-        Observable.fromIterable(list[position].locations)
-            .map {
-                it.name to it.icon
-//                it.name + ',' + it.icon
-                Log.d("MediaRecyclerAdapter", "it: ${it.name} and ${it.icon}")
-            }
-            .subscribe{ map ->
-                Log.d("MediaRecyclerAdapter", "s: $map")
-            }
+        list[position].locations.forEach {
+            val name = it.name
+            val icon = it.icon
 
+            Log.d("MediaRecyclerAdapter", "Name: $name + Icon: $icon")
 
-//        { s ->
-//                Log.d("MediaRecyclerAdapter", "s: ${s.toString()}")
-//                val (name, icon) = s
-//                val image = ImageView(holder.context)
-//                Glide.with(image)
-//                    .load(icon)
-//                    .into(image)
-//                holder.linearLayoutLocations.addView(image)
-//                holder.tvMediaAvailableOn.text = holder.itemView.context.getString(R.string.availableOn, name.toString())
-//
-//            }
+            val image = ImageView(holder.context)
+            image.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f)
+            Glide.with(image.context)
+                .load(icon)
+                .into(image)
+            holder.linearLayoutLocations.addView(image)
+
+        }
     }
 
     class ListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
