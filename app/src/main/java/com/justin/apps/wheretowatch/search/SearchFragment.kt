@@ -25,6 +25,8 @@ import kotlinx.android.synthetic.main.search_fragment.view.*
 
 
 class SearchFragment : Fragment() {
+    private val TAG = "SearchFragment"
+
     private val repo: MediaRepository = MediaRepository
     private lateinit var  recyclerView: RecyclerView
     private lateinit var recyclerAdapter: MediaRecyclerAdapter
@@ -43,7 +45,27 @@ class SearchFragment : Fragment() {
 
         //Say there is an options menu for app bar
         setHasOptionsMenu(true)
+        viewModel = ViewModelProviders.of(this, SearchViewModelFactory(repo)).get(SearchViewModel::class.java)
+
+        if (savedInstanceState == null) {
+            viewModel.freshSearch = true
+        }
+
+        retainInstance = true
+
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setRecyclerAdapaterList()
+    }
+
+
+
+    override fun onStop() {
+        super.onStop()
+        disposable?.dispose()
     }
 
     override fun onCreateView(
@@ -64,20 +86,15 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, SearchViewModelFactory(repo)).get(SearchViewModel::class.java)
-//        disposable = viewModel.mediaList
-//            ?.observeOn(Schedulers.io())
-//            ?.subscribeOn(AndroidSchedulers.mainThread())
-//            ?.subscribe { s ->
-//                recyclerAdapter.setList(s)
-//            }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.search_menu, menu)
-        val searchView = menu?.findItem(R.id.search_view)?.actionView as SearchView
+        val searchItem = menu?.findItem(R.id.search_view)
+        val searchView = searchItem?.actionView as SearchView
+        searchItem.expandActionView()
+//        searchView.setIconifiedByDefault(false)
+//        searchView.isIconified = false
+
+        Log.d(TAG, "SearchView iconified: ${searchView.isIconified}")
 
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(s: String?): Boolean {
@@ -97,6 +114,20 @@ class SearchFragment : Fragment() {
 
     fun searchQuery(s: String?) {
         viewModel.searchMedia("us", s ?: "")
+        setRecyclerAdapaterList()
+    }
+
+    private fun showLoading() {
+        loadingIndicator.visibility = View.VISIBLE
+        recyclerView.visibility = View.GONE
+    }
+
+    private fun hideLoading() {
+        loadingIndicator.visibility = View.GONE
+        recyclerView.visibility = View.VISIBLE
+    }
+
+    private fun setRecyclerAdapaterList() {
         disposable = viewModel.mediaList
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -104,15 +135,5 @@ class SearchFragment : Fragment() {
                 recyclerAdapter.setList(list)
                 hideLoading()
             }
-    }
-
-    fun showLoading() {
-        loadingIndicator.visibility = View.VISIBLE
-        recyclerView.visibility = View.GONE
-    }
-
-    fun hideLoading() {
-        loadingIndicator.visibility = View.GONE
-        recyclerView.visibility = View.VISIBLE
     }
 }
