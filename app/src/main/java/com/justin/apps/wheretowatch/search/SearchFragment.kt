@@ -90,14 +90,14 @@ class SearchFragment : Fragment() {
         inflater?.inflate(R.menu.search_menu, menu)
         val searchItem = menu?.findItem(R.id.search_view)
         val searchView = searchItem?.actionView as SearchView
-        searchItem.expandActionView()
-//        searchView.setIconifiedByDefault(false)
-//        searchView.isIconified = false
-
-        Log.d(TAG, "SearchView iconified: ${searchView.isIconified}")
+        if (viewModel.freshSearch) {
+            Log.d(TAG, "Fresh search: ${viewModel.freshSearch}")
+            searchItem.expandActionView()
+        }
 
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(s: String?): Boolean {
+                viewModel.freshSearch = false
                 showLoading()
                 searchQuery(s)
                 return false
