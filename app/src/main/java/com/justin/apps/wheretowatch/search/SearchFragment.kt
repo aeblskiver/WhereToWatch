@@ -11,6 +11,7 @@ import android.support.v7.widget.SearchView
 import android.support.v7.widget.SearchView.OnQueryTextListener
 import android.util.Log
 import android.view.*
+import android.widget.ProgressBar
 import android.widget.Toast
 import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.adapter.MediaRecyclerAdapter
@@ -27,6 +28,7 @@ class SearchFragment : Fragment() {
     private val repo: MediaRepository = MediaRepository
     private lateinit var  recyclerView: RecyclerView
     private lateinit var recyclerAdapter: MediaRecyclerAdapter
+    private lateinit var loadingIndicator: ProgressBar
     private var disposable: Disposable? = null
 
     companion object {
@@ -52,6 +54,7 @@ class SearchFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        loadingIndicator = view.loading_indicator
         recyclerView = view.recyclerview_media_list
         recyclerAdapter = MediaRecyclerAdapter()
         recyclerView.apply {
@@ -78,14 +81,8 @@ class SearchFragment : Fragment() {
 
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(s: String?): Boolean {
-                Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show()
-                viewModel.searchMedia("us", s ?: "")
-                disposable = viewModel.mediaList
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { list ->
-                        recyclerAdapter.setList(list)
-                    }
+                showLoading()
+                searchQuery(s)
                 return false
             }
 
@@ -96,5 +93,26 @@ class SearchFragment : Fragment() {
         } )
 
         //super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    fun searchQuery(s: String?) {
+        viewModel.searchMedia("us", s ?: "")
+        disposable = viewModel.mediaList
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { list ->
+                recyclerAdapter.setList(list)
+                hideLoading()
+            }
+    }
+
+    fun showLoading() {
+        loadingIndicator.visibility = View.VISIBLE
+        recyclerView.visibility = View.GONE
+    }
+
+    fun hideLoading() {
+        loadingIndicator.visibility = View.GONE
+        recyclerView.visibility = View.VISIBLE
     }
 }

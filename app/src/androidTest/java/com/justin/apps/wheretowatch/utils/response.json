@@ -1,0 +1,125 @@
+{
+  "status_code": 200,
+  "updated": "2018-11-13T04:05:34+0000",
+  "term": "marvel",
+  "results": [
+    {
+      "picture": "https://utellyassets2-8.imgix.net/2/Open/Netflix_2588/Program/24329654/_16by9/24329654_Marvels_Daredevil_KA_2.jpg?fit=crop&auto=compress&crop=faces,top",
+      "name": "Marvel's Daredevil",
+      "locations": [
+        {
+          "display_name": "iTunes",
+          "name": "ITunesUS",
+          "url": "https://itunes.apple.com/us/tv-season/rabbit-in-a-snowstorm/id1080800338?i=1090004639&uo=5&at=1l3v7yf",
+          "id": "58c141a37588d57a8e22dd54",
+          "icon": "https://utellyassets7.imgix.net/locations_icons/utelly/black/ITunesUS.png?&w=92&auto=compress&app_version=5s2gpuod4j-996"
+        },
+        {
+          "display_name": "Netflix",
+          "name": "NetflixUS",
+          "url": "https://www.netflix.com/title/80018294",
+          "id": "58c141a37588d57a9522dd54",
+          "icon": "https://utellyassets7.imgix.net/locations_icons/utelly/black/NetflixUS.png?&w=92&auto=compress&app_version=5s2gpuod4j-996"
+        }
+      ],
+      "weight": 813,
+      "id": "570d6b97ebb7f950c140f246"
+    },
+    {
+      "picture": "https://utellyassets2-9.imgix.net/2/Open/Disney_Media_Distribution_696/Program/22056122/_4by3/MARVELSAGENTSOFSHIELD_KA_1x1_S5.jpg?fit=crop&auto=compress&crop=faces,top",
+      "name": "Marvel's Agents of S.H.I.E.L.D.",
+      "locations": [
+        {
+          "display_name": "iTunes",
+          "name": "ITunesUS",
+          "url": "https://itunes.apple.com/us/tv-season/the-end/id1305301105?i=1386868150&uo=5&at=1l3v7yf",
+          "id": "58c141a37588d57a8e22dd54",
+          "icon": "https://utellyassets7.imgix.net/locations_icons/utelly/black/ITunesUS.png?&w=92&auto=compress&app_version=5s2gpuod4j-996"
+        },
+        {
+          "display_name": "Netflix",
+          "name": "NetflixUS",
+          "url": "https://www.netflix.com/title/70279852",
+          "id": "58c141a37588d57a9522dd54",
+          "icon": "https://utellyassets7.imgix.net/locations_icons/utelly/black/NetflixUS.png?&w=92&auto=compress&app_version=5s2gpuod4j-996"
+        },
+        {
+          "display_name": "Amazon Instant",
+          "name": "AmazonUS",
+          "url": "http://www.amazon.com/gp/product/B01LGB8Y2W?tag=utellycom00-21",
+          "id": "58c141a37588d57a9722dd54",
+          "icon": "https://utellyassets7.imgix.net/locations_icons/utelly/black/AmazonUS.png?&w=92&auto=compress&app_version=5s2gpuod4j-996"
+        }
+      ],
+      "weight": 569,
+      "id": "57633b38ebb7f956559d5969"
+    },
+    {
+      "picture": "https://utellyassets2-7.imgix.net/2/Open/Netflix_2588/Program/34498451/_2by1/JessicaJones_Season2_Key_Horizontal.jpg?fit=crop&auto=compress&crop=faces,top",
+      "name": "Marvel's Jessica Jones",
+      "locations": [
+        {
+          "display_name": "iTunes",
+          "name": "ITunesUS",
+          "url": "https://itunes.apple.com/us/tv-season/a-k-a-take-a-bloody-number/id1170176179?i=1173159407&uo=5&at=1l3v7yf",
+          "id": "58c141a37588d57a8e22dd54",
+          "icon": "https://utellyassets7.imgix.net/locations_icons/utelly/black/ITunesUS.png?&w=92&auto=compress&app_version=5s2gpuod4j-996"
+        },
+        {
+          "display_name": "Netflix",
+          "name": "NetflixUS",
+          "url": "https://www.netflix.com/title/80002311",
+          "id": "58c141a37588d57a9522dd54",
+          "icon": "https://utellyassets7.imgix.net/locations_icons/utelly/black/NetflixUS.png?&w=92&auto=compress&app_version=5s2gpuod4j-996"
+        },
+        {
+          "display_name": "Amazon Instant",
+          "name": "AmazonUS",
+          "url": "http://www.amazon.com/gp/product/B01N0FKE5M?tag=utellycom00-21",
+          "id": "58c141a37588d57a9722dd54",
+          "icon": "https://utellyassets7.imgix.net/locations_icons/utelly/black/AmazonUS.png?&w=92&auto=compress&app_version=5s2gpuod4j-996"
+        }
+      ],
+      "weight": 546,
+      "id": "57785eb39a1eba498881abe5"
+    },
+    {
+      "picture": "https://utellyassets2-7.imgix.net/2/Open/Netflix_2588/Program/29665125/_2by1/ThePunisher_Season1_Key_16x9.jpg?fit=crop&auto=compress&crop=faces,top",
+      "name": "Marvel's The Punisher",
+      "locations": [
+        {
+          "display_name": "Netflix",
+          "name": "NetflixUS",
+          "url": "https://www.netflix.com/title/80117498",
+          "id": "58c141a37588d57a9522dd54",
+          "icon": "https://utellyassets7.imgix.net/locations_icons/utelly/black/NetflixUS.png?&w=92&auto=compress&app_version=5s2gpuod4j-996"
+        }
+      ],
+      "weight": 527,
+      "id": "5a0f496e14d2ec00e6162e0c"
+    },
+    {
+      "picture": "https://utellyassets2-10.imgix.net/2/Open/Netflix_2588/Program/30514165/_16by9/TheDefenders_Season1_Key.jpg?fit=crop&auto=compress&crop=faces,top",
+      "name": "Marvel's The Defenders",
+      "locations": [
+        {
+          "display_name": "Netflix",
+          "name": "NetflixUS",
+          "url": "https://www.netflix.com/title/80002566",
+          "id": "58c141a37588d57a9522dd54",
+          "icon": "https://utellyassets7.imgix.net/locations_icons/utelly/black/NetflixUS.png?&w=92&auto=compress&app_version=5s2gpuod4j-996"
+        },
+        {
+          "display_name": "iTunes",
+          "name": "ITunesUS",
+          "url": "https://itunes.apple.com/us/tv-season/worst-behavior/id1428927163?i=1432326008&uo=5&at=1l3v7yf",
+          "id": "58c141a37588d57a8e22dd54",
+          "icon": "https://utellyassets7.imgix.net/locations_icons/utelly/black/ITunesUS.png?&w=92&auto=compress&app_version=5s2gpuod4j-996"
+        }
+      ],
+      "weight": 489,
+      "id": "599918b1ebb7f9734dc1a741"
+    }
+  ],
+  "variant": "utelly"
+}
