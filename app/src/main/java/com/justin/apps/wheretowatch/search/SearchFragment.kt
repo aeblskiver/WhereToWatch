@@ -59,6 +59,7 @@ class SearchFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         setRecyclerAdapaterList()
+        // TODO: Fix bug where locations get double when going back to activity
     }
 
 

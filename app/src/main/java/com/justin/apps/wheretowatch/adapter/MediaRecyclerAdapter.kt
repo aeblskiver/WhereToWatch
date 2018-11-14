@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.model.Model
+import com.justin.apps.wheretowatch.sites.Site
 import com.justin.apps.wheretowatch.util.constants.CLASS_NAME_NETFLIX
 import com.justin.apps.wheretowatch.util.constants.PACKAGE_NAME_NETFLIX
 import io.reactivex.Observable
@@ -87,11 +88,7 @@ class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewH
 
             val image = ImageView(holder.context)
             image.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f)
-            image.setOnClickListener {
-                when (displayName) {
-                    "Netflix" -> netflixIntent(url)
-                }
-            }
+            image.setOnClickListener(SiteClickListener(it))
             Glide.with(image.context)
                 .load(icon)
                 .into(image)
