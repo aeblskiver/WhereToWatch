@@ -21,6 +21,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.model.Model
+import com.justin.apps.wheretowatch.util.constants.CLASS_NAME_NETFLIX
+import com.justin.apps.wheretowatch.util.constants.PACKAGE_NAME_NETFLIX
 import io.reactivex.Observable
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.item_media.view.*
@@ -29,7 +31,7 @@ import java.lang.Exception
 class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewHolder>() {
 
     private var list: List<Model.Media> = mutableListOf()
-    private lateinit var rv: RecyclerView;
+    private lateinit var rv: RecyclerView
 
     fun setList(list: List<Model.Media>) {
         this.list = list
@@ -101,7 +103,7 @@ class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewH
     private fun netflixIntent(url: String) {
         try {
             val intent = Intent(Intent.ACTION_VIEW)
-            intent.setClassName("com.netflix.mediaclient", "com.netflix.mediaclient.ui.launch.UIWebViewActivity")
+            intent.setClassName(PACKAGE_NAME_NETFLIX, CLASS_NAME_NETFLIX)
             intent.data = Uri.parse(url)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(rv.context, intent, null)
