@@ -1,26 +1,20 @@
 package com.justin.apps.wheretowatch.search
 
-import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
-import android.support.v7.widget.SearchView.OnQueryTextListener
 import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
-import android.widget.Toast
 import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.adapter.MediaRecyclerAdapter
 import com.justin.apps.wheretowatch.repository.MediaRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.search_fragment.*
 import kotlinx.android.synthetic.main.search_fragment.view.*
 
 
@@ -58,7 +52,14 @@ class SearchFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        setRecyclerAdapaterList()
+        viewModel.mediaList.subscribe(
+            {it ->
+                if (!it.isEmpty()) {
+                Log.d(TAG, "Locations: ${it[0].locations}")}},
+            {it -> Log.d(TAG, "Nothing in view model")}
+        )
+
+        setRecyclerAdapterList()
         // TODO: Fix bug where locations get double when going back to activity
     }
 
@@ -115,7 +116,7 @@ class SearchFragment : Fragment() {
 
     fun searchQuery(s: String?) {
         viewModel.searchMedia("us", s ?: "")
-        setRecyclerAdapaterList()
+        setRecyclerAdapterList()
     }
 
     private fun showLoading() {
@@ -128,7 +129,7 @@ class SearchFragment : Fragment() {
         recyclerView.visibility = View.VISIBLE
     }
 
-    private fun setRecyclerAdapaterList() {
+    private fun setRecyclerAdapterList() {
         disposable = viewModel.mediaList
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

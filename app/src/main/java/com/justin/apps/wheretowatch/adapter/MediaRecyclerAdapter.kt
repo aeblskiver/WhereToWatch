@@ -31,10 +31,11 @@ import java.lang.Exception
 
 class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewHolder>() {
 
-    private var list: List<Model.Media> = mutableListOf()
+    private var list: List<Model.Media> = emptyList()
     private lateinit var rv: RecyclerView
 
     fun setList(list: List<Model.Media>) {
+        this.list = emptyList()
         this.list = list
         notifyDataSetChanged()
     }
@@ -59,8 +60,8 @@ class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewH
     override fun getItemCount() = list.size
 
     /*
-        Called by RecyclerView to display data at the specified position
-     */
+                Called by RecyclerView to display data at the specified position
+             */
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.tvMediaName.text = list[position].name
 
@@ -76,7 +77,14 @@ class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewH
                 it.tvMediaAvailableOn.visibility = if (it.tvMediaAvailableOn.visibility == View.GONE) View.VISIBLE else View.GONE
                 it.linearLayoutLocations.visibility = if (it.linearLayoutLocations.visibility == View.GONE) View.VISIBLE else View.GONE
             }
+            if (position == itemCount - 1) {
+                rv.scrollToPosition(itemCount - 1)
+            }
         }
+
+        // Needed to prevent imageviews from duplicating
+        // TODO: Find a better fix
+        holder.linearLayoutLocations.removeAllViews()
 
         list[position].locations.forEach {
             val name = it.name
@@ -97,21 +105,6 @@ class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewH
         }
     }
 
-    private fun netflixIntent(url: String) {
-        try {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.setClassName(PACKAGE_NAME_NETFLIX, CLASS_NAME_NETFLIX)
-            intent.data = Uri.parse(url)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(rv.context, intent, null)
-        } catch (e: Exception) {
-            Log.d("RecyclerAdapter", "Error: $e")
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(url)
-            startActivity(rv.context, intent, null)
-        }
-    }
-
     class ListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val tvMediaName: TextView = view.tv_media_name
@@ -121,5 +114,7 @@ class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewH
         val context: Context = view.context
 
     }
+
+
 
 }
