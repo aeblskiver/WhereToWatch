@@ -1,16 +1,9 @@
 package com.justin.apps.wheretowatch.adapter
 
-import android.app.ActionBar
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.support.v4.content.ContextCompat.startActivity
-import android.support.v7.widget.ActionBarOverlayLayout
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.transition.AutoTransition
 import android.transition.TransitionManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,13 +14,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.model.Model
-import com.justin.apps.wheretowatch.sites.Site
-import com.justin.apps.wheretowatch.util.constants.CLASS_NAME_NETFLIX
-import com.justin.apps.wheretowatch.util.constants.PACKAGE_NAME_NETFLIX
-import io.reactivex.Observable
-import io.reactivex.Single
 import kotlinx.android.synthetic.main.item_media.view.*
-import java.lang.Exception
 
 class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewHolder>() {
 
@@ -71,7 +58,6 @@ class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewH
             .into(holder.ivMediaView)
 
         holder.ivMediaView.setOnClickListener { _ ->
-
             TransitionManager.beginDelayedTransition(rv, AutoTransition())
             holder.let { it ->
                 it.tvMediaAvailableOn.visibility = if (it.tvMediaAvailableOn.visibility == View.GONE) View.VISIBLE else View.GONE
@@ -87,13 +73,7 @@ class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewH
         holder.linearLayoutLocations.removeAllViews()
 
         list[position].locations.forEach {
-            val name = it.name
             val icon = it.icon
-            val displayName = it.displayName
-            val url = it.url
-
-            Log.d("MediaRecyclerAdapter", "Name: $name + Icon: $icon + Display Name: ${it.displayName}")
-
             val image = ImageView(holder.context)
             image.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f)
             image.setOnClickListener(SiteClickListener(it))
@@ -101,7 +81,6 @@ class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewH
                 .load(icon)
                 .into(image)
             holder.linearLayoutLocations.addView(image)
-
         }
     }
 
@@ -114,6 +93,7 @@ class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewH
         val context: Context = view.context
 
     }
+
 
 
 

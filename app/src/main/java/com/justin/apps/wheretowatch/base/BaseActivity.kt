@@ -11,6 +11,8 @@ import com.justin.apps.wheretowatch.search.SearchFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 abstract class BaseActivity : AppCompatActivity() {
+    val BUNDLE_KEY_FRESH = "freshSearch"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,6 +28,9 @@ abstract class BaseActivity : AppCompatActivity() {
             }
             R.id.navigation_search -> {
                 selectedFragment = SearchFragment()
+                val bundle = Bundle()
+                bundle.putBoolean(BUNDLE_KEY_FRESH, true)
+                selectedFragment.arguments = bundle
                 Log.d("base", "Search fragment selected")
                 //return@OnNavigationItemSelectedListener true
             }

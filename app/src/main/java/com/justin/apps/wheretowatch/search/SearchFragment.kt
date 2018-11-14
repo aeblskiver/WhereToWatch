@@ -3,6 +3,7 @@ package com.justin.apps.wheretowatch.search
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
@@ -41,10 +42,11 @@ class SearchFragment : Fragment() {
         setHasOptionsMenu(true)
         viewModel = ViewModelProviders.of(this, SearchViewModelFactory(repo)).get(SearchViewModel::class.java)
 
-        if (savedInstanceState == null) {
-            viewModel.freshSearch = true
+        savedInstanceState?.let {
+            if (it.getBoolean("freshSearch")) {
+                viewModel.freshSearch = true
+            }
         }
-
         retainInstance = true
 
         super.onCreate(savedInstanceState)
@@ -52,17 +54,13 @@ class SearchFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.mediaList.subscribe(
-            {it ->
-                if (!it.isEmpty()) {
-                Log.d(TAG, "Locations: ${it[0].locations}")}},
-            {it -> Log.d(TAG, "Nothing in view model")}
-        )
-
         setRecyclerAdapterList()
-        // TODO: Fix bug where locations get double when going back to activity
     }
 
+    override fun onPause() {
+        super.onPause()
+        viewModel.freshSearch = false
+    }
 
 
     override fun onStop() {
@@ -102,6 +100,7 @@ class SearchFragment : Fragment() {
                 viewModel.freshSearch = false
                 showLoading()
                 searchQuery(s)
+                searchView.clearFocus()
                 return false
             }
 
@@ -138,4 +137,6 @@ class SearchFragment : Fragment() {
                 hideLoading()
             }
     }
+
+
 }

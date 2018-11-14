@@ -8,17 +8,19 @@ import android.support.v4.content.ContextCompat.startActivity
 import android.util.Log
 import com.justin.apps.wheretowatch.util.constants.CLASS_NAME_NETFLIX
 import com.justin.apps.wheretowatch.util.constants.PACKAGE_NAME_NETFLIX
+import com.justin.apps.wheretowatch.util.constants.SITE_NETFLIX
 import java.lang.Exception
-
-enum class Site {
-    NETFLIX,
-    AMAZON,
-    ITUNES,
-}
 
 object SitesIntent {
 
     private var intent: Intent? = null
+
+    fun buildIntent(site: String , url:String): SitesIntent {
+        return when (site) {
+            SITE_NETFLIX -> netflix(url)
+            else -> genericSite(url)
+        }
+    }
 
     fun netflix(url: String): SitesIntent {
         try {
@@ -27,10 +29,17 @@ object SitesIntent {
             intent?.data = Uri.parse(url)
             intent?.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         } catch (e: Exception) {
-            Log.d("RecyclerAdapter", "Error: $e")
             intent = Intent(Intent.ACTION_VIEW)
             intent?.data = Uri.parse(url)
         }
+        return this
+    }
+
+    fun genericSite(url: String): SitesIntent {
+        intent = Intent(Intent.ACTION_VIEW)
+        intent?.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        intent?.data = Uri.parse(url)
+
         return this
     }
 
@@ -39,14 +48,4 @@ object SitesIntent {
             startActivity(context, it, null)
         }
     }
-
-    fun amazon(url: String): SitesIntent {
-        intent = Intent(Intent.ACTION_VIEW)
-        intent?.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        intent?.data = Uri.parse(url)
-
-        return this
-    }
-
-
 }
