@@ -10,8 +10,10 @@ import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
+import android.widget.Toast
 import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.adapter.MediaRecyclerAdapter
+import com.justin.apps.wheretowatch.db.MediaRoomDatabase
 import com.justin.apps.wheretowatch.repository.MediaRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -23,17 +25,17 @@ class SearchFragment : Fragment() {
     private val TAG = "SearchFragment"
 
     private val repo: MediaRepository = MediaRepository
+
     private lateinit var  recyclerView: RecyclerView
     private lateinit var recyclerAdapter: MediaRecyclerAdapter
     private lateinit var loadingIndicator: ProgressBar
     private var disposable: Disposable? = null
-
     companion object {
 
         fun newInstance() = SearchFragment()
+
     }
     private lateinit var viewModel: SearchViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         // Set title for the fragment
         activity?.setTitle(R.string.title_search)
@@ -62,11 +64,11 @@ class SearchFragment : Fragment() {
         viewModel.freshSearch = false
     }
 
-
     override fun onStop() {
         super.onStop()
         disposable?.dispose()
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,7 +80,18 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         loadingIndicator = view.loading_indicator
         recyclerView = view.recyclerview_media_list
-        recyclerAdapter = MediaRecyclerAdapter()
+        recyclerAdapter = MediaRecyclerAdapter(object : MediaRecyclerAdapter.RecyclerViewFavoriteClickListener  {
+            override fun onClick(view: View?, position: Int) {
+                Toast.makeText(context, "Position: $position", Toast.LENGTH_SHORT).show()
+
+//                context?.let {
+//                    val cx = it
+//                    MediaRoomDatabase.getInstance(cx)?.roomDao()?.insertMedia()
+//                }
+
+
+            }
+        })
         recyclerView.apply {
             adapter = recyclerAdapter
             layoutManager = LinearLayoutManager(context)
@@ -107,7 +120,6 @@ class SearchFragment : Fragment() {
             override fun onQueryTextChange(s: String?): Boolean {
                 return true
             }
-
         } )
 
         //super.onCreateOptionsMenu(menu, inflater)
@@ -137,6 +149,4 @@ class SearchFragment : Fragment() {
                 hideLoading()
             }
     }
-
-
 }

@@ -16,7 +16,7 @@ import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.model.Model
 import kotlinx.android.synthetic.main.item_media.view.*
 
-class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewHolder>() {
+class MediaRecyclerAdapter(var rvListener: RecyclerViewFavoriteClickListener) : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewHolder>() {
 
     private var list: List<Model.Media> = emptyList()
     private lateinit var rv: RecyclerView
@@ -34,10 +34,10 @@ class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewH
     }
 
     /*
-            Called when RecyclerView needs a new ViewHolder of the given type to represent an item
-            @param parent - Parent viewgroup
-            @param viewType -
-         */
+        Called when RecyclerView needs a new ViewHolder of the given type to represent an item
+        @param parent - Parent viewgroup
+        @param viewType -
+    */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_media, parent, false)
 
@@ -47,8 +47,8 @@ class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewH
     override fun getItemCount() = list.size
 
     /*
-                Called by RecyclerView to display data at the specified position
-             */
+        Called by RecyclerView to display data at the specified position
+    */
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.tvMediaName.text = list[position].name
 
@@ -56,17 +56,6 @@ class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewH
             .load(list[position].picture)
             .apply(RequestOptions.fitCenterTransform())
             .into(holder.ivMediaView)
-
-        holder.ivMediaView.setOnClickListener { _ ->
-            TransitionManager.beginDelayedTransition(rv, AutoTransition())
-            holder.let { it ->
-                it.tvMediaAvailableOn.visibility = if (it.tvMediaAvailableOn.visibility == View.GONE) View.VISIBLE else View.GONE
-                it.linearLayoutLocations.visibility = if (it.linearLayoutLocations.visibility == View.GONE) View.VISIBLE else View.GONE
-            }
-            if (position == itemCount - 1) {
-                rv.scrollToPosition(itemCount - 1)
-            }
-        }
 
         // Needed to prevent imageviews from duplicating
         // TODO: Find a better fix
@@ -84,17 +73,46 @@ class MediaRecyclerAdapter : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewH
         }
     }
 
-    class ListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    interface RecyclerViewFavoriteClickListener {
+        fun onClick(view: View?, position: Int)
+    }
+
+    inner class ListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val tvMediaName: TextView = view.tv_media_name
         val tvMediaAvailableOn: TextView = view.tv_available_on
         val ivMediaView: ImageView = view.iv_media_pic
         val linearLayoutLocations: LinearLayout = view.linearlayout_locations
+        val ivFavorite: ImageView = view.iv_favorite
         val context: Context = view.context
+        var isFavorite = false
+
+        init {
+            ivMediaView.setOnClickListener{
+                TransitionManager.beginDelayedTransition(rv, AutoTransition())
+                tvMediaAvailableOn.visibility = if (tvMediaAvailableOn.visibility == View.GONE) View.VISIBLE else View.GONE
+                linearLayoutLocations.visibility = if (linearLayoutLocations.visibility == View.GONE) View.VISIBLE else View.GONE
+                ivFavorite.visibility = if (ivFavorite.visibility == View.GONE) View.VISIBLE else View.GONE
+                if (adapterPosition == itemCount - 1) {
+                    rv.scrollToPosition(itemCount - 1)
+                }
+            }
+
+            ivFavorite.setOnClickListener {
+                ivFavorite.setImageResource(
+                    when (isFavorite) {
+                        false -> R.drawable.ic_baseline_favorite_24px
+                        else -> R.drawable.ic_baseline_favorite_border_24px
+                    })
+                isFavorite = !isFavorite
+                onClick(it)
+            }
+        }
+
+        fun onClick(v: View?) {
+            rvListener.onClick(v, adapterPosition)
+        }
+
 
     }
-
-
-
-
 }

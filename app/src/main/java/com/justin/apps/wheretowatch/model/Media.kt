@@ -1,5 +1,10 @@
 package com.justin.apps.wheretowatch.model
 
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.TypeConverters
+import com.justin.apps.wheretowatch.db.LocationTypeConverter
 import com.squareup.moshi.Json
 
 class Model {
@@ -12,12 +17,13 @@ class Model {
      * @property weight how close to the search term it is
      * @property id unique id
      */
+    @Entity(tableName = "media")
     data class Media(
         val picture: String,
         val name: String,
         val locations: List<Location>,
         val weight: Int,
-        val id: String
+        @PrimaryKey val id: String
     )
 
     /**
