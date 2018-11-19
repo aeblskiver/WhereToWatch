@@ -4,6 +4,7 @@ import com.justin.apps.wheretowatch.util.constants.MASHAPE_APIKEY
 import com.justin.apps.wheretowatch.util.constants.UTELLY_BASE_URL
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import io.reactivex.Maybe
 import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -27,7 +28,7 @@ interface MediaApi {
     @GET("lookup")
     fun search(
         @Query("country") country: String,
-        @Query("term") searchTerm: String) : Single<MediaResponse>
+        @Query("term") searchTerm: String) : Maybe<MediaResponse>
 
     //Api service companion object
     companion object Factory{

@@ -16,29 +16,48 @@ import io.reactivex.disposables.Disposables
 import io.reactivex.schedulers.Schedulers
 
 class SearchViewModel(val repo: MediaRepository) : ViewModel() {
+    private val TAG = "SearchViewModel"
 
     var mediaList: Maybe<List<Model.Media>> = Maybe.just(emptyList<Model.Media>())
     var mediaList2: List<Model.Media> = emptyList()
     var loading = false
     var freshSearch = false
+    var disposable: Disposable? = null
 
     init {
-       val d = mediaList
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSuccess {
-                mediaList2 = it
-            }
+//       val d = mediaList
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .doOnSuccess {
+//                mediaList2 = it
+//            }
     }
 
     // TODO: Implement the ViewModel
     fun searchMedia(country: String ,term: String)  {
         loading = true
-        mediaList = repo.getFromApi(country, term).toMaybe()
+        disposable = repo.getFromApi(country, term)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(::setList, ::onError)
     }
 
     fun insertMedia(media: Model.Media) {
 
+    }
+
+    override fun onCleared() {
+        disposable?.dispose()
+        super.onCleared()
+    }
+
+    private fun setList(list: List<Model.Media>) {
+        Log.d(TAG, "List: $list")
+        mediaList2 = list
+    }
+
+    private fun onError(e: Throwable) {
+        Log.d(TAG, "Error: ${e.message}")
     }
 }
 

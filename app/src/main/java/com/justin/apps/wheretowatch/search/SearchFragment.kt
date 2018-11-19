@@ -40,8 +40,6 @@ class SearchFragment : Fragment() {
         // Set title for the fragment
         activity?.setTitle(R.string.title_search)
 
-        //Say there is an options menu for app bar
-        setHasOptionsMenu(true)
         viewModel = ViewModelProviders.of(this, SearchViewModelFactory(repo)).get(SearchViewModel::class.java)
 
         savedInstanceState?.let {
@@ -51,6 +49,7 @@ class SearchFragment : Fragment() {
         }
         retainInstance = true
 
+        setHasOptionsMenu(true)
         super.onCreate(savedInstanceState)
     }
 
@@ -141,12 +140,14 @@ class SearchFragment : Fragment() {
     }
 
     private fun setRecyclerAdapterList() {
-        disposable = viewModel.mediaList
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { list ->
-                recyclerAdapter.setList(list)
-                hideLoading()
-            }
+//        disposable = viewModel.mediaList
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe { list ->
+//                recyclerAdapter.setList(list)
+//                hideLoading()
+//            }
+        recyclerAdapter.setList(viewModel.mediaList2)
+        recyclerAdapter.notifyDataSetChanged()
     }
 }

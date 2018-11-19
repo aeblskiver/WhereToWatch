@@ -1,8 +1,10 @@
 package com.justin.apps.wheretowatch.repository
 
+import android.util.Log
 import com.justin.apps.wheretowatch.model.Model
 import com.justin.apps.wheretowatch.network.MediaApi
 import com.justin.apps.wheretowatch.network.MediaResponse
+import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,8 +25,11 @@ object MediaRepository {
      *  @param searchTerm the term used to search Utelly's API
      *  @return an Observable list of shows and movies
      */
-    fun getFromApi(country: String, searchTerm: String): Single<List<Model.Media>> =
+    fun getFromApi(country: String, searchTerm: String): Maybe<List<Model.Media>> =
             apiService.search(country, searchTerm)
+                .doOnError{
+                    Log.d("MediaRepository", "Error: ${it.message}")
+                }
                 .map {
                     it.results
                 }
