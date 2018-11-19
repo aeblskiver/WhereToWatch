@@ -82,13 +82,6 @@ class SearchFragment : Fragment() {
         recyclerAdapter = MediaRecyclerAdapter(object : MediaRecyclerAdapter.RecyclerViewFavoriteClickListener  {
             override fun onClick(view: View?, position: Int) {
                 Toast.makeText(context, "Position: $position", Toast.LENGTH_SHORT).show()
-
-//                context?.let {
-//                    val cx = it
-//                    MediaRoomDatabase.getInstance(cx)?.roomDao()?.insertMedia()
-//                }
-
-
             }
         })
         recyclerView.apply {
@@ -120,8 +113,7 @@ class SearchFragment : Fragment() {
                 return true
             }
         } )
-
-        //super.onCreateOptionsMenu(menu, inflater)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     fun searchQuery(s: String?) {

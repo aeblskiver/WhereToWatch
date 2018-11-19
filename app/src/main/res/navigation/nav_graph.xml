@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_graph"
+            app:startDestination="@id/welcomeFragment">
+
+    <fragment
+        android:id="@+id/actionSearch"
+        android:name="com.justin.apps.wheretowatch.search.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/search_fragment"
+        />
+    <activity android:id="@+id/baseActivity2" android:name="com.justin.apps.wheretowatch.base.BaseActivity"
+              android:label="BaseActivity"/>
+    <fragment android:id="@+id/welcomeFragment" android:name="com.justin.apps.wheretowatch.WelcomeFragment"
+              android:label="WelcomeFragment">
+        <action android:id="@+id/action_welcomeFragment_to_searchFragment" app:destination="@id/actionSearch"/>
+    </fragment>
+
+</navigation>
