@@ -5,16 +5,19 @@
             app:startDestination="@id/welcomeFragment">
 
     <fragment
-        android:id="@+id/actionSearch"
-        android:name="com.justin.apps.wheretowatch.search.SearchFragment"
-        android:label="SearchFragment"
-        tools:layout="@layout/search_fragment"
-        />
+            android:id="@+id/actionSearch"
+            android:name="com.justin.apps.wheretowatch.search.SearchFragment"
+            android:label="Search"
+            tools:layout="@layout/search_fragment"
+    />
     <activity android:id="@+id/baseActivity2" android:name="com.justin.apps.wheretowatch.base.BaseActivity"
               android:label="BaseActivity"/>
     <fragment android:id="@+id/welcomeFragment" android:name="com.justin.apps.wheretowatch.WelcomeFragment"
               android:label="WelcomeFragment">
         <action android:id="@+id/action_welcomeFragment_to_searchFragment" app:destination="@id/actionSearch"/>
+        <action android:id="@+id/action_welcomeFragment_to_favoriteFragment" app:destination="@id/actionFavorite"/>
     </fragment>
+    <fragment android:id="@+id/actionFavorite" android:name="com.justin.apps.wheretowatch.favorite.FavoriteFragment"
+              android:label="Favorite" tools:layout="@layout/fragment_favorite"/>
 
 </navigation>

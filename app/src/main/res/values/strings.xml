@@ -10,4 +10,7 @@
     <string name="availableOn">Available On:</string>
     <string name="add_to_favorites">Add to favorites</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

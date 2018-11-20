@@ -1,5 +1,8 @@
 package com.justin.apps.wheretowatch.base
 
+import android.app.Activity
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
@@ -10,21 +13,34 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.justin.apps.wheretowatch.R
+import com.justin.apps.wheretowatch.model.Model
+import com.justin.apps.wheretowatch.repository.MediaRepository
+import com.justin.apps.wheretowatch.search.SearchFragment
+import com.justin.apps.wheretowatch.search.SearchFragment.FavoriteClickListener
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class BaseActivity : AppCompatActivity() {
+class BaseActivity : AppCompatActivity(), FavoriteClickListener {
+    val TAG = "BaseActivity"
     val BUNDLE_KEY_FRESH = "freshSearch"
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
+    lateinit var sharedViewModel: SharedViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        navController = findNavController(R.id.fragment_host)
-
         setSupportActionBar(findViewById(R.id.toolbar_main))
 
-        //supportFragmentManager.beginTransaction().add(R.id.container, WelcomeFragment()).commit()
+        sharedViewModel = ViewModelProviders.of(this, SharedViewModelFactory(MediaRepository)).get(SharedViewModel::class.java)
+        setupNavigation()
+    }
+
+    private fun setupNavigation() {
+        navController = findNavController(R.id.fragment_host)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         bottomNavigationView.setupWithNavController(navController)
         toolbar_main.setupWithNavController(navController, appBarConfiguration)
@@ -32,26 +48,29 @@ class BaseActivity : AppCompatActivity() {
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-//        val selectedFragment: Fragment = Fragment()
         when (item.itemId) {
-            R.id.navigation_favorites -> {
-                return@OnNavigationItemSelectedListener true
+            R.id.actionFavorite -> {
+                navController.navigate(R.id.actionFavorite)
             }
             R.id.actionSearch -> {
-//                selectedFragment = SearchFragment()
-//                val bundle = Bundle()
-//                bundle.putBoolean(BUNDLE_KEY_FRESH, true)
-//                selectedFragment.arguments = bundle
-                //return@OnNavigationItemSelectedListener true
                 navController.navigate(R.id.actionSearch)
             }
             R.id.navigation_filter -> {
                 return@OnNavigationItemSelectedListener true
             }
         }
-        Log.d("base", "Search fragment replacing")
-
         true
+    }
+
+    fun instance(): BaseActivity {
+        return this
+    }
+
+    override fun onClick(media: Model.Media?) {
+        GlobalScope.launch(Dispatchers.IO) {
+            Log.d(TAG, "Attempting insert into database: $media")
+            sharedViewModel.insert(media)
+        }
     }
 
     override fun onSupportNavigateUp() = findNavController(R.id.fragment_host).navigateUp()

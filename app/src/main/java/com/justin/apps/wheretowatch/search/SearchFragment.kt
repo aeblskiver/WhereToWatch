@@ -14,7 +14,10 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.adapter.MediaRecyclerAdapter
+import com.justin.apps.wheretowatch.base.BaseActivity
 import com.justin.apps.wheretowatch.db.MediaRoomDatabase
+import com.justin.apps.wheretowatch.model.Model
+import com.justin.apps.wheretowatch.model.Model.Media
 import com.justin.apps.wheretowatch.repository.MediaRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -22,26 +25,20 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.search_fragment.view.*
 
 
-class SearchFragment : Fragment() {
+class SearchFragment() : Fragment() {
     private val TAG = "SearchFragment"
 
-    private val repo: MediaRepository = MediaRepository
 
     private lateinit var  recyclerView: RecyclerView
     private lateinit var recyclerAdapter: MediaRecyclerAdapter
     private lateinit var loadingIndicator: ProgressBar
     private var disposable: Disposable? = null
-    companion object {
-
-        fun newInstance() = SearchFragment()
-
-    }
     private lateinit var viewModel: SearchViewModel
-    override fun onCreate(savedInstanceState: Bundle?) {
-        // Set title for the fragment
-        activity?.setTitle(R.string.title_search)
+    private lateinit var favoriteClickListener: SearchFragment.FavoriteClickListener
 
-        viewModel = ViewModelProviders.of(this, SearchViewModelFactory(repo)).get(SearchViewModel::class.java)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        viewModel = ViewModelProviders.of(this, SearchViewModelFactory(MediaRepository)).get(SearchViewModel::class.java)
+        favoriteClickListener = activity as BaseActivity
 
         savedInstanceState?.let {
             if (it.getBoolean("freshSearch")) {
@@ -82,6 +79,8 @@ class SearchFragment : Fragment() {
         recyclerAdapter = MediaRecyclerAdapter(object : MediaRecyclerAdapter.RecyclerViewFavoriteClickListener  {
             override fun onClick(view: View?, position: Int) {
                 Toast.makeText(context, "Position: $position", Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "Media: ${viewModel.mediaList2.value?.get(position)}")
+                favoriteClickListener.onClick(viewModel.mediaList2.value?.get(position))
             }
         })
         recyclerView.apply {
@@ -133,5 +132,9 @@ class SearchFragment : Fragment() {
     private fun hideLoading() {
         loadingIndicator.visibility = View.GONE
         recyclerView.visibility = View.VISIBLE
+    }
+
+    interface FavoriteClickListener {
+        fun onClick(media: Media?)
     }
 }

@@ -16,7 +16,7 @@ import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.model.Model
 import kotlinx.android.synthetic.main.item_media.view.*
 
-class MediaRecyclerAdapter(var rvListener: RecyclerViewFavoriteClickListener) : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewHolder>() {
+class MediaRecyclerAdapter(var rvListener: RecyclerViewFavoriteClickListener?) : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewHolder>() {
 
     private var list: List<Model.Media> = emptyList()
     private lateinit var rv: RecyclerView
@@ -110,7 +110,7 @@ class MediaRecyclerAdapter(var rvListener: RecyclerViewFavoriteClickListener) : 
         }
 
         fun onClick(v: View?) {
-            rvListener.onClick(v, adapterPosition)
+            rvListener?.onClick(v, adapterPosition)
         }
 
 

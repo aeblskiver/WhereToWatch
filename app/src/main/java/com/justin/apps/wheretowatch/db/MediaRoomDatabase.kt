@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import android.content.Context
+import com.justin.apps.wheretowatch.adapter.App
 import com.justin.apps.wheretowatch.model.Model
 
 @Database(version = 1, entities = [Model.Media::class])
@@ -18,7 +19,8 @@ abstract class MediaRoomDatabase: RoomDatabase() {
         fun getInstance(context: Context): MediaRoomDatabase? {
             if (INSTANCE == null) {
                 synchronized(MediaRoomDatabase::class) {
-                    INSTANCE = Room.databaseBuilder(context.applicationContext,
+                    INSTANCE = Room.databaseBuilder(
+                        App.appContext(),
                         MediaRoomDatabase::class.java,
                         "media.db")
                         .build()

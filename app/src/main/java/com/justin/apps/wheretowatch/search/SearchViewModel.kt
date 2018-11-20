@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import com.justin.apps.wheretowatch.adapter.MediaRecyclerAdapter
 import com.justin.apps.wheretowatch.model.Model
+import com.justin.apps.wheretowatch.model.Model.Media
 import com.justin.apps.wheretowatch.repository.MediaRepository
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -19,23 +20,11 @@ import io.reactivex.schedulers.Schedulers
 class SearchViewModel(val repo: MediaRepository) : ViewModel() {
     private val TAG = "SearchViewModel"
 
-    var mediaList: Maybe<List<Model.Media>> = Maybe.just(emptyList<Model.Media>())
-    lateinit var mediaList2: MutableLiveData<List<Model.Media>>
+    var mediaList2: MutableLiveData<List<Media>> = MutableLiveData()
     var loading = false
     var freshSearch = false
     var disposable: Disposable? = null
 
-    init {
-//       val d = mediaList
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .doOnSuccess {
-//                mediaList2 = it
-//            }
-        mediaList2 = MutableLiveData()
-    }
-
-    // TODO: Implement the ViewModel
     fun searchMedia(country: String ,term: String)  {
         loading = true
         disposable = repo.getFromApi(country, term)
@@ -44,22 +33,17 @@ class SearchViewModel(val repo: MediaRepository) : ViewModel() {
             .subscribe(::setList, ::onError)
     }
 
-    fun insertMedia(media: Model.Media) {
-
-    }
-
-    override fun onCleared() {
-        disposable?.dispose()
-        super.onCleared()
-    }
-
-    private fun setList(list: List<Model.Media>) {
-        Log.d(TAG, "List: $list")
+    private fun setList(list: List<Media>) {
         mediaList2.postValue(list)
     }
 
     private fun onError(e: Throwable) {
         Log.d(TAG, "Error: ${e.message}")
+    }
+
+    override fun onCleared() {
+        disposable?.dispose()
+        super.onCleared()
     }
 }
 
