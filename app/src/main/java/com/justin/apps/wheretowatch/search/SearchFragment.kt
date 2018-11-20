@@ -1,5 +1,6 @@
 package com.justin.apps.wheretowatch.search
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -55,7 +56,6 @@ class SearchFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        setRecyclerAdapterList()
     }
 
     override fun onPause() {
@@ -88,6 +88,11 @@ class SearchFragment : Fragment() {
             adapter = recyclerAdapter
             layoutManager = LinearLayoutManager(context)
         }
+        viewModel.mediaList2.observe(this, Observer {
+            recyclerAdapter.setList(it ?: emptyList())
+            recyclerAdapter.notifyDataSetChanged()
+            hideLoading()
+        } )
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -118,7 +123,6 @@ class SearchFragment : Fragment() {
 
     fun searchQuery(s: String?) {
         viewModel.searchMedia("us", s ?: "")
-        setRecyclerAdapterList()
     }
 
     private fun showLoading() {
@@ -129,17 +133,5 @@ class SearchFragment : Fragment() {
     private fun hideLoading() {
         loadingIndicator.visibility = View.GONE
         recyclerView.visibility = View.VISIBLE
-    }
-
-    private fun setRecyclerAdapterList() {
-//        disposable = viewModel.mediaList
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe { list ->
-//                recyclerAdapter.setList(list)
-//                hideLoading()
-//            }
-        recyclerAdapter.setList(viewModel.mediaList2)
-        recyclerAdapter.notifyDataSetChanged()
     }
 }

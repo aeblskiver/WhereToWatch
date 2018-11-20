@@ -1,5 +1,6 @@
 package com.justin.apps.wheretowatch.search
 
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
@@ -19,7 +20,7 @@ class SearchViewModel(val repo: MediaRepository) : ViewModel() {
     private val TAG = "SearchViewModel"
 
     var mediaList: Maybe<List<Model.Media>> = Maybe.just(emptyList<Model.Media>())
-    var mediaList2: List<Model.Media> = emptyList()
+    lateinit var mediaList2: MutableLiveData<List<Model.Media>>
     var loading = false
     var freshSearch = false
     var disposable: Disposable? = null
@@ -31,6 +32,7 @@ class SearchViewModel(val repo: MediaRepository) : ViewModel() {
 //            .doOnSuccess {
 //                mediaList2 = it
 //            }
+        mediaList2 = MutableLiveData()
     }
 
     // TODO: Implement the ViewModel
@@ -53,7 +55,7 @@ class SearchViewModel(val repo: MediaRepository) : ViewModel() {
 
     private fun setList(list: List<Model.Media>) {
         Log.d(TAG, "List: $list")
-        mediaList2 = list
+        mediaList2.postValue(list)
     }
 
     private fun onError(e: Throwable) {
