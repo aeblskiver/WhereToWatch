@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.adapter.MediaRecyclerAdapter
 import com.justin.apps.wheretowatch.base.BaseActivity
-import com.justin.apps.wheretowatch.repository.MediaRepository
 import kotlinx.android.synthetic.main.fragment_favorite.*
 
 

@@ -3,18 +3,11 @@ package com.justin.apps.wheretowatch.search
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.util.Log
-import android.view.View
-import com.justin.apps.wheretowatch.adapter.MediaRecyclerAdapter
-import com.justin.apps.wheretowatch.model.Model
 import com.justin.apps.wheretowatch.model.Model.Media
 import com.justin.apps.wheretowatch.repository.MediaRepository
-import io.reactivex.Maybe
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.disposables.Disposables
 import io.reactivex.schedulers.Schedulers
 
 class SearchViewModel(val repo: MediaRepository) : ViewModel() {

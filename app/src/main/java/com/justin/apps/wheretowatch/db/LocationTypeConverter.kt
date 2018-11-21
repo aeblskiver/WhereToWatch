@@ -2,9 +2,7 @@ package com.justin.apps.wheretowatch.db
 
 import android.arch.persistence.room.TypeConverter
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.justin.apps.wheretowatch.model.Model
-import java.lang.reflect.Type
 
 class LocationTypeConverter {
 

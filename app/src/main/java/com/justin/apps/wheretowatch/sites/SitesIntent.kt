@@ -3,13 +3,10 @@ package com.justin.apps.wheretowatch.sites
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.support.v4.content.ContextCompat
 import android.support.v4.content.ContextCompat.startActivity
-import android.util.Log
 import com.justin.apps.wheretowatch.util.constants.CLASS_NAME_NETFLIX
 import com.justin.apps.wheretowatch.util.constants.PACKAGE_NAME_NETFLIX
 import com.justin.apps.wheretowatch.util.constants.SITE_NETFLIX
-import java.lang.Exception
 
 object SitesIntent {
 

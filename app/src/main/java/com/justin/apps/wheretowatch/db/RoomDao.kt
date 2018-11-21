@@ -3,7 +3,6 @@ package com.justin.apps.wheretowatch.db
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import com.justin.apps.wheretowatch.model.Model
-import io.reactivex.Maybe
 
 @Dao
 interface RoomDao {
@@ -11,7 +10,7 @@ interface RoomDao {
     fun insertMedia(media: Model.Media?)
 
     @Delete
-    fun deleteMedia(media: Model.Media)
+    fun deleteMedia(media: Model.Media?)
 
     @Query("SELECT * FROM media")
     fun loadAllMedia(): LiveData<List<Model.Media>>

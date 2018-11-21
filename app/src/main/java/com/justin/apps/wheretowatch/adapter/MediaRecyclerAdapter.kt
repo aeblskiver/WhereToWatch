@@ -74,7 +74,7 @@ class MediaRecyclerAdapter(var rvListener: RecyclerViewFavoriteClickListener?) :
     }
 
     interface RecyclerViewFavoriteClickListener {
-        fun onClick(view: View?, position: Int)
+        fun onClick(view: View?, position: Int, favorite: Boolean)
     }
 
     inner class ListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -110,7 +110,7 @@ class MediaRecyclerAdapter(var rvListener: RecyclerViewFavoriteClickListener?) :
         }
 
         fun onClick(v: View?) {
-            rvListener?.onClick(v, adapterPosition)
+            rvListener?.onClick(v, adapterPosition, isFavorite)
         }
 
 

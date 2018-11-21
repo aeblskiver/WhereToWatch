@@ -1,11 +1,8 @@
 package com.justin.apps.wheretowatch.base
 
-import android.app.Activity
-import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import androidx.navigation.NavController
@@ -15,7 +12,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.model.Model
 import com.justin.apps.wheretowatch.repository.MediaRepository
-import com.justin.apps.wheretowatch.search.SearchFragment
 import com.justin.apps.wheretowatch.search.SearchFragment.FavoriteClickListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
@@ -35,7 +31,8 @@ class BaseActivity : AppCompatActivity(), FavoriteClickListener {
 
         setSupportActionBar(findViewById(R.id.toolbar_main))
 
-        sharedViewModel = ViewModelProviders.of(this, SharedViewModelFactory(MediaRepository)).get(SharedViewModel::class.java)
+        sharedViewModel = ViewModelProviders.of(this,
+            SharedViewModelFactory(MediaRepository)).get(SharedViewModel::class.java)
         setupNavigation()
     }
 
@@ -47,7 +44,8 @@ class BaseActivity : AppCompatActivity(), FavoriteClickListener {
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+    private val mOnNavigationItemSelectedListener
+            = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.actionFavorite -> {
                 navController.navigate(R.id.actionFavorite)
@@ -66,12 +64,22 @@ class BaseActivity : AppCompatActivity(), FavoriteClickListener {
         return this
     }
 
-    override fun onClick(media: Model.Media?) {
-        GlobalScope.launch(Dispatchers.IO) {
-            Log.d(TAG, "Attempting insert into database: $media")
-            sharedViewModel.insert(media)
+    override fun onClick(media: Model.Media?, favorite: Boolean) {
+        when (favorite) {
+            true -> {
+                GlobalScope.launch(Dispatchers.IO) {
+                    Log.d(TAG, "Attempting insert into database: $media")
+                    sharedViewModel.insert(media)
+                }
+                }
+            false -> {
+                GlobalScope.launch {
+                    Log.d(TAG, "Attempting to remove from Database")
+                    sharedViewModel.remove(media)
+                }
+            }
+            }
         }
-    }
 
     override fun onSupportNavigateUp() = findNavController(R.id.fragment_host).navigateUp()
 }

@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
@@ -15,19 +14,14 @@ import android.widget.Toast
 import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.adapter.MediaRecyclerAdapter
 import com.justin.apps.wheretowatch.base.BaseActivity
-import com.justin.apps.wheretowatch.db.MediaRoomDatabase
-import com.justin.apps.wheretowatch.model.Model
 import com.justin.apps.wheretowatch.model.Model.Media
 import com.justin.apps.wheretowatch.repository.MediaRepository
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.search_fragment.view.*
 
 
-class SearchFragment() : Fragment() {
+class SearchFragment : Fragment() {
     private val TAG = "SearchFragment"
-
 
     private lateinit var  recyclerView: RecyclerView
     private lateinit var recyclerAdapter: MediaRecyclerAdapter
@@ -77,10 +71,10 @@ class SearchFragment() : Fragment() {
         loadingIndicator = view.loading_indicator
         recyclerView = view.recyclerview_media_list
         recyclerAdapter = MediaRecyclerAdapter(object : MediaRecyclerAdapter.RecyclerViewFavoriteClickListener  {
-            override fun onClick(view: View?, position: Int) {
+            override fun onClick(view: View?, position: Int, favorite: Boolean) {
                 Toast.makeText(context, "Position: $position", Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "Media: ${viewModel.mediaList2.value?.get(position)}")
-                favoriteClickListener.onClick(viewModel.mediaList2.value?.get(position))
+                favoriteClickListener.onClick(viewModel.mediaList2.value?.get(position), favorite)
             }
         })
         recyclerView.apply {
@@ -135,6 +129,6 @@ class SearchFragment() : Fragment() {
     }
 
     interface FavoriteClickListener {
-        fun onClick(media: Media?)
+        fun onClick(media: Media?, favorite: Boolean)
     }
 }

@@ -1,10 +1,7 @@
 package com.justin.apps.wheretowatch.model
 
-import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
-import android.arch.persistence.room.TypeConverters
-import com.justin.apps.wheretowatch.db.LocationTypeConverter
 import com.squareup.moshi.Json
 
 class Model {

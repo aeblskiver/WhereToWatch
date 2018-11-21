@@ -1,22 +1,14 @@
 package com.justin.apps.wheretowatch.repository
 
-import android.app.Application
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import android.content.Context
 import android.util.Log
 import com.justin.apps.wheretowatch.adapter.App
 import com.justin.apps.wheretowatch.db.MediaRoomDatabase
-import com.justin.apps.wheretowatch.model.Model
 import com.justin.apps.wheretowatch.model.Model.Media
 import com.justin.apps.wheretowatch.network.MediaApi
-import com.justin.apps.wheretowatch.network.MediaResponse
+import com.justin.apps.wheretowatch.repository.MediaRepository.apiService
 import io.reactivex.Maybe
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import java.util.*
 
 /**
  * A repository for fetching and caching list of Media (shows and movies) from Utelly API or local database
@@ -45,11 +37,11 @@ object MediaRepository {
         return db?.roomDao()?.loadAllMedia() ?: MutableLiveData<List<Media>>()
     }
 
-    suspend fun insert(media: Media?) {
+    fun insert(media: Media?) {
         db?.roomDao()?.insertMedia(media)
     }
 
-    fun remove(media: Media) {
+    fun remove(media: Media?) {
         db?.roomDao()?.deleteMedia(media)
     }
 
