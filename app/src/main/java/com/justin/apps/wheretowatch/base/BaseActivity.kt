@@ -12,7 +12,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.model.Model
 import com.justin.apps.wheretowatch.repository.MediaRepository
-import com.justin.apps.wheretowatch.search.SearchFragment.FavoriteClickListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -66,18 +65,16 @@ class BaseActivity : AppCompatActivity(), FavoriteClickListener {
 
     override fun onClick(media: Model.Media?, favorite: Boolean) {
         when (favorite) {
-            true -> {
+            false -> {
                 GlobalScope.launch(Dispatchers.IO) {
                     Log.d(TAG, "Attempting insert into database: $media")
                     sharedViewModel.insert(media)
-                }
-                }
-            false -> {
+                }}
+            true -> {
                 GlobalScope.launch {
                     Log.d(TAG, "Attempting to remove from Database")
                     sharedViewModel.remove(media)
-                }
-            }
+                }}
             }
         }
 

@@ -14,6 +14,7 @@ import android.widget.Toast
 import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.adapter.MediaRecyclerAdapter
 import com.justin.apps.wheretowatch.base.BaseActivity
+import com.justin.apps.wheretowatch.base.FavoriteClickListener
 import com.justin.apps.wheretowatch.model.Model.Media
 import com.justin.apps.wheretowatch.repository.MediaRepository
 import io.reactivex.disposables.Disposable
@@ -28,7 +29,7 @@ class SearchFragment : Fragment() {
     private lateinit var loadingIndicator: ProgressBar
     private var disposable: Disposable? = null
     private lateinit var viewModel: SearchViewModel
-    private lateinit var favoriteClickListener: SearchFragment.FavoriteClickListener
+    private lateinit var favoriteClickListener: FavoriteClickListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModel = ViewModelProviders.of(this, SearchViewModelFactory(MediaRepository)).get(SearchViewModel::class.java)
@@ -126,9 +127,5 @@ class SearchFragment : Fragment() {
     private fun hideLoading() {
         loadingIndicator.visibility = View.GONE
         recyclerView.visibility = View.VISIBLE
-    }
-
-    interface FavoriteClickListener {
-        fun onClick(media: Media?, favorite: Boolean)
     }
 }

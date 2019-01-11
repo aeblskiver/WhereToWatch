@@ -29,12 +29,12 @@ class FavoriteFragment : Fragment() {
         val rv = recyclerview_favorite_list
         rv.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = MediaRecyclerAdapter(null)
+            adapter = MediaRecyclerAdapter(null, true)
         }
         (activity as BaseActivity).sharedViewModel.favoriteList.observe(this, Observer {
             Log.d(TAG, "List: $it")
             (rv.adapter as MediaRecyclerAdapter).setList(it ?: emptyList())
-            (rv.adapter as MediaRecyclerAdapter).notifyDataSetChanged()
+            //(rv.adapter as MediaRecyclerAdapter).notifyDataSetChanged()
         })
         super.onViewCreated(view, savedInstanceState)
     }
