@@ -16,7 +16,7 @@
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="8dp">
+            android:id="@+id/cl_card">
 
         <ImageView
                 android:id="@+id/iv_media_pic"
@@ -43,46 +43,108 @@
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="Placeholder"/>
 
-        <TextView
-                android:id="@+id/tv_available_on"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginStart="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_media_pic"
-                android:text="@string/availableOn"
-                style="@style/Base.TextAppearance.AppCompat.Caption"
-                android:visibility="gone"
-                tools:visibility="visible"
-
-        />
         <LinearLayout
-                android:id="@+id/linearlayout_locations"
-                android:orientation="horizontal"
+                android:id="@+id/ll_available_on_holder"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/image_view_max_height"
-                android:layout_marginStart="8dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/iv_media_pic"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_available_on"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="24dp"
                 android:visibility="gone"
-                android:gravity="center"
-                tools:visibility="visible"
-        >
+                tools:visibility="visible">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+            >
+                <TextView
+                        android:id="@+id/tv_available_on"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_media_pic"
+                        android:text="@string/availableOn"
+                        style="@style/Base.TextAppearance.AppCompat.Caption"
+                        tools:visibility="visible"
+
+                />
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:layout_gravity="right"
+                        android:layout_marginEnd="8dp"
+                        app:srcCompat="@drawable/ic_baseline_favorite_border_24px"
+                        android:id="@+id/iv_favorite"
+                        tools:visibility="visible"
+                        android:contentDescription="@string/add_to_favorites"
+                />
+            </LinearLayout>
+            <LinearLayout
+                    android:id="@+id/linearlayout_locations"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/image_view_max_height"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_available_on"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="24dp"
+                    android:gravity="center"
+                    tools:visibility="visible"
+            >
+
         </LinearLayout>
-        <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" app:srcCompat="@drawable/ic_baseline_favorite_border_24px"
-                android:id="@+id/iv_favorite" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="24dp"
-                android:layout_marginTop="24dp" app:layout_constraintTop_toBottomOf="@+id/iv_media_pic"
-                android:visibility="gone"
-                tools:visibility="visible"
-                android:contentDescription="@string/add_to_favorites"
-        />
+
+        <!--<TextView-->
+                <!--android:id="@+id/tv_available_on"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="24dp"-->
+                <!--android:layout_marginStart="8dp"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/iv_media_pic"-->
+                <!--android:text="@string/availableOn"-->
+                <!--style="@style/Base.TextAppearance.AppCompat.Caption"-->
+                <!--android:visibility="gone"-->
+                <!--tools:visibility="visible"-->
+
+        <!--/>-->
+        <!--<LinearLayout-->
+                <!--android:id="@+id/linearlayout_locations"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/image_view_max_height"-->
+                <!--android:layout_marginStart="8dp"-->
+                <!--android:layout_marginBottom="8dp"-->
+                <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--app:layout_constraintEnd_toEndOf="parent"-->
+                <!--android:layout_marginEnd="8dp"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/tv_available_on"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--android:layout_marginTop="24dp"-->
+                <!--android:visibility="gone"-->
+                <!--android:gravity="center"-->
+                <!--tools:visibility="visible"-->
+        <!--&gt;-->
+        </LinearLayout>
+        <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" app:srcCompat="@drawable/ic_baseline_favorite_border_24px"-->
+                <!--android:id="@+id/iv_favorite" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="24dp"-->
+                <!--android:layout_marginTop="24dp" app:layout_constraintTop_toBottomOf="@+id/iv_media_pic"-->
+                <!--android:visibility="gone"-->
+                <!--tools:visibility="visible"-->
+                <!--android:contentDescription="@string/add_to_favorites"-->
+        <!--/>-->
     </android.support.constraint.ConstraintLayout>
+
 </android.support.v7.widget.CardView>

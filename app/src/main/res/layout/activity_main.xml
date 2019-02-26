@@ -7,6 +7,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/backgroundDark"
         tools:context=".base.BaseActivity">
 
     <fragment
@@ -26,7 +27,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
             android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            android:theme="@style/ToolBarStyle"
             app:popupTheme="@style/Theme.AppCompat.Light"
     >
         <android.support.v7.widget.Toolbar
@@ -34,6 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_scrollFlags="scroll|enterAlways"
+                android:foregroundTint="@color/appBarText"
 
         />
     </android.support.design.widget.AppBarLayout>
@@ -44,6 +46,6 @@
             android:layout_gravity="bottom"
             android:background="?android:attr/windowBackground"
             app:menu="@menu/navigation" app:elevation="8dp"
-            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior" />
+            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"/>
 
 </android.support.design.widget.CoordinatorLayout>

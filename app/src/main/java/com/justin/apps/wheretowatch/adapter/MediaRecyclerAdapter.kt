@@ -92,6 +92,7 @@ class MediaRecyclerAdapter(var rvListener: RecyclerViewFavoriteClickListener?, v
         val ivMediaView: ImageView = view.iv_media_pic
         val ivFavorite: ImageView = view.iv_favorite
         val linearLayoutLocations: LinearLayout = view.linearlayout_locations
+        val linearLayoutHolder: LinearLayout = view.ll_available_on_holder
         var isFavorite = false
         val imageResource: Int
             get() {
@@ -104,9 +105,17 @@ class MediaRecyclerAdapter(var rvListener: RecyclerViewFavoriteClickListener?, v
         init {
             ivMediaView.setOnClickListener{
                 TransitionManager.beginDelayedTransition(rv, AutoTransition())
-                tvMediaAvailableOn.visibility = if (tvMediaAvailableOn.visibility == View.GONE) View.VISIBLE else View.GONE
-                linearLayoutLocations.visibility = if (linearLayoutLocations.visibility == View.GONE) View.VISIBLE else View.GONE
-                ivFavorite.visibility = if (ivFavorite.visibility == View.GONE) View.VISIBLE else View.GONE
+                linearLayoutHolder.apply {
+                    visibility = when (visibility) {
+                        View.VISIBLE -> View.GONE
+                        View.GONE -> View.VISIBLE
+                        else -> View.VISIBLE
+                    }
+
+                }
+//                tvMediaAvailableOn.visibility = if (tvMediaAvailableOn.visibility == View.GONE) View.VISIBLE else View.GONE
+//                linearLayoutLocations.visibility = if (linearLayoutLocations.visibility == View.GONE) View.VISIBLE else View.GONE
+//                ivFavorite.visibility = if (ivFavorite.visibility == View.GONE) View.VISIBLE else View.GONE
                 if (adapterPosition == itemCount - 1) {
                     rv.scrollToPosition(itemCount - 1)
                 }
