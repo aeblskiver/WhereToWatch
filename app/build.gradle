@@ -6,12 +6,6 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
-}
-
 android {
     compileSdkVersion 28
     defaultConfig {

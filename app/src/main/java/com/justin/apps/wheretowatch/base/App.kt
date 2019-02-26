@@ -1,4 +1,4 @@
-package com.justin.apps.wheretowatch.adapter
+package com.justin.apps.wheretowatch.base
 
 import android.app.Application
 

@@ -9,7 +9,7 @@ class SiteClickListener(private val site: Location): View.OnClickListener {
 
     override fun onClick(v: View?) {
         v?.let {
-            SitesIntent.buildIntent(site.displayName, site.url).launch(it.context)
+            SitesIntent.buildIntent(site.url).launch(it.context)
         }
     }
 

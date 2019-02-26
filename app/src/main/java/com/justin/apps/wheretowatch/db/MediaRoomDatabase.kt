@@ -1,13 +1,11 @@
 package com.justin.apps.wheretowatch.db
 
-import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
-import android.arch.persistence.room.migration.Migration
 import android.content.Context
-import com.justin.apps.wheretowatch.adapter.App
+import com.justin.apps.wheretowatch.base.App
 import com.justin.apps.wheretowatch.model.Model
 
 @Database(version = 1, entities = [Model.Media::class])
@@ -18,7 +16,7 @@ abstract class MediaRoomDatabase: RoomDatabase() {
     companion object {
         private var INSTANCE: MediaRoomDatabase? = null
 
-        fun getInstance(context: Context): MediaRoomDatabase? {
+        fun getInstance(): MediaRoomDatabase? {
             if (INSTANCE == null) {
                 synchronized(MediaRoomDatabase::class) {
                     INSTANCE = Room.databaseBuilder(
