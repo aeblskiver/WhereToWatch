@@ -1,10 +1,12 @@
 package com.justin.apps.wheretowatch.adapter
 
+import android.app.ActionBar
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.support.constraint.ConstraintLayout
+import android.support.v7.widget.LinearSmoothScroller
 import android.support.v7.widget.RecyclerView
-import android.transition.AutoTransition
-import android.transition.TransitionManager
+import android.transition.*
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -68,7 +70,8 @@ class MediaRecyclerAdapter(var rvListener: RecyclerViewFavoriteClickListener?, v
         list[position].locations.forEach {
             val icon = it.icon
             val image = ImageView(holder.context)
-            image.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f)
+            image.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 128, 1f)
+            image.setPadding(0,8,0,8)
             image.setOnClickListener(SiteClickListener(it))
             Glide.with(image.context)
                 .load(icon)
@@ -92,7 +95,7 @@ class MediaRecyclerAdapter(var rvListener: RecyclerViewFavoriteClickListener?, v
         val ivMediaView: ImageView = view.iv_media_pic
         val ivFavorite: ImageView = view.iv_favorite
         val linearLayoutLocations: LinearLayout = view.linearlayout_locations
-        val linearLayoutHolder: LinearLayout = view.ll_available_on_holder
+        val clSubCard: ConstraintLayout = view.cl_subcard
         var isFavorite = false
         val imageResource: Int
             get() {
@@ -104,20 +107,47 @@ class MediaRecyclerAdapter(var rvListener: RecyclerViewFavoriteClickListener?, v
 
         init {
             ivMediaView.setOnClickListener{
-                TransitionManager.beginDelayedTransition(rv, AutoTransition())
-                linearLayoutHolder.apply {
+
+                val changeBounds = ChangeBounds()
+                changeBounds.addListener(object: Transition.TransitionListener {
+                    override fun onTransitionEnd(transition: Transition?) {
+                        val smoothScroller: RecyclerView.SmoothScroller = object: LinearSmoothScroller(context) {
+                            @Override
+                            override fun getVerticalSnapPreference(): Int {
+                                return when (adapterPosition) {
+                                    itemCount - 1 -> LinearSmoothScroller.SNAP_TO_END
+                                    else -> LinearSmoothScroller.SNAP_TO_START
+                                }
+                            }
+                        }
+                        smoothScroller.targetPosition = adapterPosition
+                        rv.layoutManager?.startSmoothScroll(smoothScroller)
+                    }
+
+                    override fun onTransitionResume(transition: Transition?) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+
+                    override fun onTransitionPause(transition: Transition?) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+
+                    override fun onTransitionCancel(transition: Transition?) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+
+                    override fun onTransitionStart(transition: Transition?) {
+                    }
+
+                })
+                TransitionManager.go(Scene(rv), changeBounds)
+                clSubCard.apply {
                     visibility = when (visibility) {
                         View.VISIBLE -> View.GONE
                         View.GONE -> View.VISIBLE
                         else -> View.VISIBLE
                     }
 
-                }
-//                tvMediaAvailableOn.visibility = if (tvMediaAvailableOn.visibility == View.GONE) View.VISIBLE else View.GONE
-//                linearLayoutLocations.visibility = if (linearLayoutLocations.visibility == View.GONE) View.VISIBLE else View.GONE
-//                ivFavorite.visibility = if (ivFavorite.visibility == View.GONE) View.VISIBLE else View.GONE
-                if (adapterPosition == itemCount - 1) {
-                    rv.scrollToPosition(itemCount - 1)
                 }
             }
 
