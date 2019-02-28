@@ -14,4 +14,9 @@
         <item name="android:actionMenuTextColor">@color/appBarText</item>
     </style>
 
+    <style name="SearchViewStyle" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="android:textColor">@color/appBarText</item>
+        <item name="android:textColorHint">@color/appBarText</item>
+    </style>
+
 </resources>

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.*
+import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import com.justin.apps.wheretowatch.R
@@ -73,7 +74,6 @@ class SearchFragment : Fragment() {
         recyclerView = view.recyclerview_media_list
         recyclerAdapter = MediaRecyclerAdapter(object : MediaRecyclerAdapter.RecyclerViewFavoriteClickListener  {
             override fun onClick(view: View?, position: Int, favorite: Boolean) {
-                Toast.makeText(context, "Position: $position", Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "Media: ${viewModel.mediaList2.value?.get(position)}")
                 favoriteClickListener.onClick(viewModel.mediaList2.value?.get(position), favorite)
             }
@@ -94,6 +94,9 @@ class SearchFragment : Fragment() {
         inflater?.inflate(R.menu.search_menu, menu)
         val searchItem = menu?.findItem(R.id.search_view)
         val searchView = searchItem?.actionView as SearchView
+
+        (searchView.findViewById<EditText>(android.support.v7.appcompat.R.id.search_src_text)).setHintTextColor(resources.getColor(R.color.appBarText))
+
         if (viewModel.freshSearch) {
             Log.d(TAG, "Fresh search: ${viewModel.freshSearch}")
             searchItem.expandActionView()

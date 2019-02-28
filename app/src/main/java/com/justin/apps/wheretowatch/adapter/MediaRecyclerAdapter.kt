@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ListView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Glide.init
@@ -68,19 +69,23 @@ class MediaRecyclerAdapter(var rvListener: RecyclerViewFavoriteClickListener?, v
         holder.linearLayoutLocations.removeAllViews()
 
         list[position].locations.forEach {
-            val icon = it.icon
-            val image = ImageView(holder.context)
-            image.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 128, 1f)
-            image.setPadding(0,8,0,8)
-            image.setOnClickListener(SiteClickListener(it))
-            Glide.with(image.context)
-                .load(icon)
-                .into(image)
-            holder.linearLayoutLocations.addView(image)
+            setAndInsertImageResource(holder, it)
         }
+    }
 
-        holder.isFavorite = isFavoriteFragment
-        Log.d(TAG, "holder favorite: ${holder.isFavorite} | isFavoriteFragment: $isFavoriteFragment")
+    /*
+        Uses Glide to set image resource and insert the image view into the Linear Layout
+     */
+    private fun setAndInsertImageResource(holder: ListViewHolder, it: Model.Location) {
+        val icon = it.icon
+        val image = ImageView(holder.context)
+        image.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 128, 1f)
+        image.setPadding(0,8,0,8)
+        image.setOnClickListener(SiteClickListener(it))
+        Glide.with(image.context)
+            .load(icon)
+            .into(image)
+        holder.linearLayoutLocations.addView(image)
     }
 
     interface RecyclerViewFavoriteClickListener {
@@ -124,20 +129,13 @@ class MediaRecyclerAdapter(var rvListener: RecyclerViewFavoriteClickListener?, v
                         rv.layoutManager?.startSmoothScroll(smoothScroller)
                     }
 
-                    override fun onTransitionResume(transition: Transition?) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                    }
+                    override fun onTransitionResume(transition: Transition?) {}
 
-                    override fun onTransitionPause(transition: Transition?) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                    }
+                    override fun onTransitionPause(transition: Transition?) {}
 
-                    override fun onTransitionCancel(transition: Transition?) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                    }
+                    override fun onTransitionCancel(transition: Transition?) {}
 
-                    override fun onTransitionStart(transition: Transition?) {
-                    }
+                    override fun onTransitionStart(transition: Transition?) {}
 
                 })
                 TransitionManager.go(Scene(rv), changeBounds)
