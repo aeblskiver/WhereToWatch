@@ -20,6 +20,7 @@ import com.justin.apps.wheretowatch.base.FavoriteClickListener
 import com.justin.apps.wheretowatch.model.Model.Media
 import com.justin.apps.wheretowatch.repository.MediaRepository
 import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.search_fragment.*
 import kotlinx.android.synthetic.main.search_fragment.view.*
 
 /**
@@ -49,19 +50,11 @@ class SearchFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
 
     override fun onPause() {
         super.onPause()
         viewModel.freshSearch = false
     }
-
-    override fun onStop() {
-        super.onStop()
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,34 +65,31 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         loadingIndicator = view.loading_indicator
-        recyclerView = view.recyclerview_media_list
-        recyclerAdapter = MediaRecyclerAdapter(favoriteClickListener)
-        recyclerView.apply {
-            adapter = recyclerAdapter
-            layoutManager = LinearLayoutManager(context)
-        }
-        viewModel.mediaList2.observe(this, Observer {
-            recyclerAdapter.setList(it ?: emptyList())
-            recyclerAdapter.notifyDataSetChanged()
-            hideLoading()
-        } )
+        setUpRecyclerView(view)
         super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.search_menu, menu)
+        setUpSearchView(menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun setUpSearchView(menu: Menu?) {
         val searchItem = menu?.findItem(R.id.search_view)
         val searchView = searchItem?.actionView as SearchView
 
-        (searchView.findViewById<EditText>(android.support.v7.appcompat.R.id.search_src_text)).setHintTextColor(ContextCompat.getColor(
-            this.context!!, R.color.appBarText))
+        (searchView.findViewById<EditText>(android.support.v7.appcompat.R.id.search_src_text)).setHintTextColor(
+            ContextCompat.getColor(
+                this.context!!, R.color.appBarText
+            )
+        )
 
         if (viewModel.freshSearch) {
-            Log.d(TAG, "Fresh search: ${viewModel.freshSearch}")
             searchItem.expandActionView()
         }
 
-        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(s: String?): Boolean {
                 viewModel.freshSearch = false
                 showLoading()
@@ -111,8 +101,21 @@ class SearchFragment : Fragment() {
             override fun onQueryTextChange(s: String?): Boolean {
                 return true
             }
-        } )
-        super.onCreateOptionsMenu(menu, inflater)
+        })
+    }
+
+    private fun setUpRecyclerView(view: View) {
+        recyclerView = view.recyclerview_media_list
+        recyclerAdapter = MediaRecyclerAdapter(favoriteClickListener)
+        recyclerView.apply {
+            adapter = recyclerAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
+        viewModel.mediaList2.observe(this, Observer {
+            recyclerAdapter.setList(it ?: emptyList())
+            recyclerAdapter.notifyDataSetChanged()
+            hideLoading()
+        })
     }
 
     fun searchQuery(s: String?) {
