@@ -113,7 +113,6 @@ class MediaRecyclerAdapter(var rvListener: FavoriteClickListener, var isFavorite
 
         init {
             ivMediaView.setOnClickListener{
-
                 val changeBounds = ChangeBounds()
                 changeBounds.addListener(object: Transition.TransitionListener {
                     override fun onTransitionEnd(transition: Transition?) {
@@ -121,7 +120,9 @@ class MediaRecyclerAdapter(var rvListener: FavoriteClickListener, var isFavorite
                             @Override
                             override fun getVerticalSnapPreference(): Int {
                                 return when (adapterPosition) {
-                                    itemCount - 1 -> LinearSmoothScroller.SNAP_TO_END
+                                    itemCount - 1 -> {
+                                        LinearSmoothScroller.SNAP_TO_END
+                                    }
                                     else -> LinearSmoothScroller.SNAP_TO_START
                                 }
                             }
@@ -131,11 +132,8 @@ class MediaRecyclerAdapter(var rvListener: FavoriteClickListener, var isFavorite
                     }
 
                     override fun onTransitionResume(transition: Transition?) {}
-
                     override fun onTransitionPause(transition: Transition?) {}
-
                     override fun onTransitionCancel(transition: Transition?) {}
-
                     override fun onTransitionStart(transition: Transition?) {}
 
                 })

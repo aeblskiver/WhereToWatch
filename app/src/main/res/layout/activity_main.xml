@@ -9,8 +9,8 @@
         android:layout_height="match_parent"
         android:background="@color/backgroundDark"
         tools:context=".base.BaseActivity">
-
     <fragment
+
             android:id="@+id/fragment_host"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
@@ -18,26 +18,23 @@
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_graph"
             tools:layout="@layout/welcome_fragment"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <android.support.design.widget.AppBarLayout
+
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
             android:elevation="4dp"
             android:theme="@style/ToolBarStyle"
-            app:popupTheme="@style/Theme.AppCompat.Light"
-    >
+            app:popupTheme="@style/Theme.AppCompat.Light">
         <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_main"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_scrollFlags="scroll|enterAlways"
-                android:foregroundTint="@color/appBarText"
-
-        />
+                android:foregroundTint="@color/appBarText"/>
     </android.support.design.widget.AppBarLayout>
     <android.support.design.widget.BottomNavigationView
             android:id="@+id/bottomNavigationView"
@@ -49,5 +46,6 @@
             app:itemIconTint="@color/appBarText"
             app:menu="@menu/navigation" app:elevation="8dp"
             app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"/>
+
 
 </android.support.design.widget.CoordinatorLayout>
