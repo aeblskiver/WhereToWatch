@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
@@ -90,7 +91,8 @@ class SearchFragment : Fragment() {
         val searchItem = menu?.findItem(R.id.search_view)
         val searchView = searchItem?.actionView as SearchView
 
-        (searchView.findViewById<EditText>(android.support.v7.appcompat.R.id.search_src_text)).setHintTextColor(resources.getColor(R.color.appBarText))
+        (searchView.findViewById<EditText>(android.support.v7.appcompat.R.id.search_src_text)).setHintTextColor(ContextCompat.getColor(
+            this.context!!, R.color.appBarText))
 
         if (viewModel.freshSearch) {
             Log.d(TAG, "Fresh search: ${viewModel.freshSearch}")
