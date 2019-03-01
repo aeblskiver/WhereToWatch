@@ -59,24 +59,11 @@ class BaseActivity : AppCompatActivity(), FavoriteClickListener {
         true
     }
 
-    fun instance(): BaseActivity {
-        return this
-    }
-
     override fun onClick(media: Model.Media?, favorite: Boolean) {
-        when (favorite) {
-            false -> {
-                GlobalScope.launch(Dispatchers.IO) {
-                    Log.d(TAG, "Attempting insert into database: $media")
-                    sharedViewModel.insert(media)
-                }}
-            true -> {
-                GlobalScope.launch {
-                    Log.d(TAG, "Attempting to remove from Database")
-                    sharedViewModel.remove(media)
-                }}
-            }
+        GlobalScope.launch(Dispatchers.IO) {
+            sharedViewModel.insert(media)
         }
+    }
 
     override fun onSupportNavigateUp() = findNavController(R.id.fragment_host).navigateUp()
 }

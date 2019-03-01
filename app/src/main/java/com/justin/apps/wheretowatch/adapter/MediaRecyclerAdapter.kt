@@ -19,10 +19,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.Glide.init
 import com.bumptech.glide.request.RequestOptions
 import com.justin.apps.wheretowatch.R
+import com.justin.apps.wheretowatch.base.FavoriteClickListener
 import com.justin.apps.wheretowatch.model.Model
 import kotlinx.android.synthetic.main.item_media.view.*
 
-class MediaRecyclerAdapter(var rvListener: RecyclerViewFavoriteClickListener?, var isFavoriteFragment: Boolean = false) : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewHolder>() {
+class MediaRecyclerAdapter(var rvListener: FavoriteClickListener, var isFavoriteFragment: Boolean = false) : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewHolder>() {
 
     private val TAG = "MediaRecyclerAdapter"
     private var list: List<Model.Media> = emptyList()
@@ -154,12 +155,12 @@ class MediaRecyclerAdapter(var rvListener: RecyclerViewFavoriteClickListener?, v
             ivFavorite.setOnClickListener {
                 isFavorite = !isFavorite
                 ivFavorite.setImageResource(imageResource)
-                onClick(it)
+                onClick()
             }
         }
 
-        fun onClick(v: View?) {
-            rvListener?.onClick(v, adapterPosition, isFavorite)
+        private fun onClick() {
+            rvListener.onClick(list[adapterPosition], isFavorite)
         }
     }
 }

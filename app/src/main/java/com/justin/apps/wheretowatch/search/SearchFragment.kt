@@ -72,12 +72,7 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         loadingIndicator = view.loading_indicator
         recyclerView = view.recyclerview_media_list
-        recyclerAdapter = MediaRecyclerAdapter(object : MediaRecyclerAdapter.RecyclerViewFavoriteClickListener  {
-            override fun onClick(view: View?, position: Int, favorite: Boolean) {
-                Log.d(TAG, "Media: ${viewModel.mediaList2.value?.get(position)}")
-                favoriteClickListener.onClick(viewModel.mediaList2.value?.get(position), favorite)
-            }
-        })
+        recyclerAdapter = MediaRecyclerAdapter(favoriteClickListener)
         recyclerView.apply {
             adapter = recyclerAdapter
             layoutManager = LinearLayoutManager(context)

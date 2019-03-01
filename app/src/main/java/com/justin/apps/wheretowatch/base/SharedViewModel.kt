@@ -18,14 +18,10 @@ class SharedViewModel(val repo: MediaRepository): ViewModel() {
     }
 
     fun load() {
-//        disposable = repo.loadFromDatabase()
-//            ?.subscribeOn(Schedulers.io())
-//            ?.observeOn(AndroidSchedulers.mainThread())
-//            ?.subscribe(::onSuccess, ::onError)
         favoriteList = repo.loadFromDatabase()
     }
 
-    suspend fun insert(media: Media?) {
+    fun insert(media: Media?) {
         repo.insert(media)
     }
 
