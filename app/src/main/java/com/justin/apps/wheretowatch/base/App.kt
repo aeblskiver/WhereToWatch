@@ -2,6 +2,9 @@ package com.justin.apps.wheretowatch.base
 
 import android.app.Application
 
+/**
+ *  Application subclass used to get easy access to application context
+ */
 class App: Application() {
     init {
         instance = this

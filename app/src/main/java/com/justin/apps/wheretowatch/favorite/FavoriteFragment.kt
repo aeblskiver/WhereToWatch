@@ -13,7 +13,10 @@ import com.justin.apps.wheretowatch.adapter.MediaRecyclerAdapter
 import com.justin.apps.wheretowatch.base.BaseActivity
 import kotlinx.android.synthetic.main.fragment_favorite.*
 
-
+/**
+ *  Fragment for displaying the user's favorite shows/movies. These items are saved in and pulled from the Room
+ *  database.
+ */
 class FavoriteFragment : Fragment() {
     private val TAG = "FavoriteFragment"
 

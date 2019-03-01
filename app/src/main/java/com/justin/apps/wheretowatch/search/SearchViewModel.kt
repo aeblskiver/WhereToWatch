@@ -10,6 +10,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
+/**
+ *  View Model for the search fragment.
+ */
 class SearchViewModel(val repo: MediaRepository) : ViewModel() {
     private val TAG = "SearchViewModel"
 

@@ -4,10 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.support.v4.content.ContextCompat.startActivity
-import com.justin.apps.wheretowatch.util.constants.CLASS_NAME_NETFLIX
-import com.justin.apps.wheretowatch.util.constants.PACKAGE_NAME_NETFLIX
-import com.justin.apps.wheretowatch.util.constants.SITE_NETFLIX
 
+/**
+ *  Class used to create and launch intents that would either navigate to a website where the user can watch
+ *  a show/movie or it would open the correct app (Netflix app, Amazon Prime Video app, etc.)
+ *
+ *  Originally I thought this would be a lot more complicated as I thought I would have to find the right package names
+ *  for each individual app to build the intents but it turns out simple implicit intents are able to launch the correct app
+ *  based off the url alone.
+ */
 object SitesIntent {
 
     private var intent: Intent? = null

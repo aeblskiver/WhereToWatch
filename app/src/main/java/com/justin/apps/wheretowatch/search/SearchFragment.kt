@@ -21,14 +21,15 @@ import com.justin.apps.wheretowatch.repository.MediaRepository
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.search_fragment.view.*
 
-
+/**
+ *  Fragment where users can search for shows/movies. Uses the network API to make requests.
+ */
 class SearchFragment : Fragment() {
     private val TAG = "SearchFragment"
 
     private lateinit var  recyclerView: RecyclerView
     private lateinit var recyclerAdapter: MediaRecyclerAdapter
     private lateinit var loadingIndicator: ProgressBar
-    private var disposable: Disposable? = null
     private lateinit var viewModel: SearchViewModel
     private lateinit var favoriteClickListener: FavoriteClickListener
 
@@ -58,7 +59,6 @@ class SearchFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        disposable?.dispose()
     }
 
 

@@ -17,6 +17,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
+/**
+ *  Activity that forms the base of the app. Uses Navigation components to swap out fragments.
+ *  Sets up Bottom Navigation View and top Toolbar.
+ */
 class BaseActivity : AppCompatActivity(), FavoriteClickListener {
     val TAG = "BaseActivity"
     val BUNDLE_KEY_FRESH = "freshSearch"
@@ -24,6 +28,9 @@ class BaseActivity : AppCompatActivity(), FavoriteClickListener {
     private lateinit var navController: NavController
     lateinit var sharedViewModel: SharedViewModel
 
+    /**
+     *  Set up toolbar and navigation here
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,6 +42,10 @@ class BaseActivity : AppCompatActivity(), FavoriteClickListener {
         setupNavigation()
     }
 
+    /**
+     *  Finds the navigation controller and configures navigation graph.
+     *  Sets up toolbar to work with nav controller.
+     */
     private fun setupNavigation() {
         navController = findNavController(R.id.fragment_host)
         appBarConfiguration = AppBarConfiguration(navController.graph)
@@ -43,6 +54,9 @@ class BaseActivity : AppCompatActivity(), FavoriteClickListener {
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
 
+    /**
+     *  Listens for selections in Bottom Navigation View and changes into the proper fragment.
+     */
     private val mOnNavigationItemSelectedListener
             = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -59,11 +73,15 @@ class BaseActivity : AppCompatActivity(), FavoriteClickListener {
         true
     }
 
+    /**
+     *  Base Activity listens for clicks in the RecyclerView cards to either insert/remove items in database.
+     */
     override fun onClick(media: Model.Media?, favorite: Boolean) {
         GlobalScope.launch(Dispatchers.IO) {
             sharedViewModel.insert(media)
         }
     }
+
 
     override fun onSupportNavigateUp() = findNavController(R.id.fragment_host).navigateUp()
 }

@@ -8,6 +8,9 @@ import android.content.Context
 import com.justin.apps.wheretowatch.base.App
 import com.justin.apps.wheretowatch.model.Model
 
+/**
+ *  Room database
+ */
 @Database(version = 1, entities = [Model.Media::class])
 @TypeConverters(LocationTypeConverter::class)
 abstract class MediaRoomDatabase: RoomDatabase() {

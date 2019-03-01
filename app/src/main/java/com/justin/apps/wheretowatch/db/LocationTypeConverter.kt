@@ -4,6 +4,9 @@ import android.arch.persistence.room.TypeConverter
 import com.google.gson.Gson
 import com.justin.apps.wheretowatch.model.Model
 
+/**
+ *  Type converter to convert Location results from Json to list or from list to Json
+ */
 class LocationTypeConverter {
 
     val gson: Gson = Gson()

@@ -11,7 +11,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Query
 
 /**
- * Interface for Retrofit to create API
+ * Interface for Retrofit to create API implementation
  */
 interface MediaApi {
 

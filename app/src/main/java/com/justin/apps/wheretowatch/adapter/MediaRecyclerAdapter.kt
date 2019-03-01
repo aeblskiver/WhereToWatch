@@ -1,26 +1,22 @@
 package com.justin.apps.wheretowatch.adapter
 
-import android.app.ActionBar
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.LinearSmoothScroller
 import android.support.v7.widget.RecyclerView
 import android.transition.*
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.ListView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.Glide.init
 import com.bumptech.glide.request.RequestOptions
 import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.base.FavoriteClickListener
 import com.justin.apps.wheretowatch.model.Model
+import com.justin.apps.wheretowatch.sites.SiteClickListener
 import kotlinx.android.synthetic.main.item_media.view.*
 
 class MediaRecyclerAdapter(var rvListener: FavoriteClickListener, var isFavoriteFragment: Boolean = false) : RecyclerView.Adapter<MediaRecyclerAdapter.ListViewHolder>() {
@@ -35,13 +31,7 @@ class MediaRecyclerAdapter(var rvListener: FavoriteClickListener, var isFavorite
         notifyDataSetChanged()
     }
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-
-        rv = recyclerView
-    }
-
-    /*
+    /**
         Called when RecyclerView needs a new ViewHolder of the given type to represent an item
         @param parent - Parent viewgroup
         @param viewType -
@@ -52,9 +42,12 @@ class MediaRecyclerAdapter(var rvListener: FavoriteClickListener, var isFavorite
         return ListViewHolder(view)
     }
 
+    /**
+     *  Return number of items in list
+     */
     override fun getItemCount() = list.size
 
-    /*
+    /**
         Called by RecyclerView to display data at the specified position
     */
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
@@ -74,7 +67,16 @@ class MediaRecyclerAdapter(var rvListener: FavoriteClickListener, var isFavorite
         }
     }
 
-    /*
+    /**
+     *  Used to get a reference to the RecyclerView for use in the ListViewHolder class
+     */
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+
+        rv = recyclerView
+    }
+
+    /**
         Uses Glide to set image resource and insert the image view into the Linear Layout
      */
     private fun setAndInsertImageResource(holder: ListViewHolder, it: Model.Location) {
@@ -89,10 +91,9 @@ class MediaRecyclerAdapter(var rvListener: FavoriteClickListener, var isFavorite
         holder.linearLayoutLocations.addView(image)
     }
 
-    interface RecyclerViewFavoriteClickListener {
-        fun onClick(view: View?, position: Int, favorite: Boolean)
-    }
-
+    /**
+     *  Inner class that the adapter uses to hold Views.
+     */
     inner class ListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val context: Context = view.context
@@ -112,6 +113,8 @@ class MediaRecyclerAdapter(var rvListener: FavoriteClickListener, var isFavorite
             }
 
         init {
+            // Listens for clicks on a card to expand/collapse additional views
+            // Uses simple transitions to animate the views and snap to a position in the list
             ivMediaView.setOnClickListener{
                 val changeBounds = ChangeBounds()
                 changeBounds.addListener(object: Transition.TransitionListener {
@@ -148,8 +151,10 @@ class MediaRecyclerAdapter(var rvListener: FavoriteClickListener, var isFavorite
                 }
             }
 
+            // Sets the favorite icon
             ivFavorite.setImageResource(imageResource)
 
+            // Changes the favorite icon on click
             ivFavorite.setOnClickListener {
                 isFavorite = !isFavorite
                 ivFavorite.setImageResource(imageResource)
@@ -157,6 +162,7 @@ class MediaRecyclerAdapter(var rvListener: FavoriteClickListener, var isFavorite
             }
         }
 
+        // Calls back to the base activity's onClick method to insert/delete an item
         private fun onClick() {
             rvListener.onClick(list[adapterPosition], isFavorite)
         }
