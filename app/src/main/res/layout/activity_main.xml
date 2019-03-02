@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.design.widget.CoordinatorLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context=".base.BaseActivity">
+
+<android.support.design.widget.CoordinatorLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/backgroundDark"
-        tools:context=".base.BaseActivity">
-    <fragment
+        android:layout_above="@id/bottomNavigationView"
+        android:background="@color/backgroundDark">
 
-            android:id="@+id/fragment_host"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/nav_graph"
-            tools:layout="@layout/welcome_fragment"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <android.support.design.widget.AppBarLayout
 
@@ -36,6 +33,22 @@
                 app:layout_scrollFlags="scroll|enterAlways|snap"
                 android:foregroundTint="@color/appBarText"/>
     </android.support.design.widget.AppBarLayout>
+
+    <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <fragment
+            android:id="@+id/fragment_host"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_graph"
+            tools:layout="@layout/welcome_fragment"/>
+
+    </FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout>
+
     <android.support.design.widget.BottomNavigationView
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
@@ -45,7 +58,7 @@
             app:itemTextColor="@color/appBarText"
             app:itemIconTint="@color/appBarText"
             app:menu="@menu/navigation" app:elevation="8dp"
-            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"/>
-
-
-</android.support.design.widget.CoordinatorLayout>
+            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+            android:layout_alignParentBottom="true"
+    />
+</RelativeLayout>

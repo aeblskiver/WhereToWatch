@@ -28,6 +28,7 @@ class BaseActivity : AppCompatActivity(), FavoriteClickListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
     lateinit var sharedViewModel: SharedViewModel
+    lateinit var bottomNav: BottomNavigationView
 
     /**
      *  Set up toolbar and navigation here
@@ -35,6 +36,7 @@ class BaseActivity : AppCompatActivity(), FavoriteClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        bottomNav = findViewById(R.id.bottomNavigationView)
 
         setSupportActionBar(findViewById(R.id.toolbar_main))
 

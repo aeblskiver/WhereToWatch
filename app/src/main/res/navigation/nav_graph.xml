@@ -14,8 +14,12 @@
               android:label="BaseActivity"/>
     <fragment android:id="@+id/welcomeFragment" android:name="com.justin.apps.wheretowatch.WelcomeFragment"
               android:label="WelcomeFragment">
-        <action android:id="@+id/action_welcomeFragment_to_searchFragment" app:destination="@id/actionSearch"/>
-        <action android:id="@+id/action_welcomeFragment_to_favoriteFragment" app:destination="@id/actionFavorite"/>
+        <action android:id="@+id/action_welcomeFragment_to_searchFragment" app:destination="@id/actionSearch"
+                app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim" app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action android:id="@+id/action_welcomeFragment_to_favoriteFragment" app:destination="@id/actionFavorite"
+                app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
     <fragment android:id="@+id/actionFavorite" android:name="com.justin.apps.wheretowatch.favorite.FavoriteFragment"
               android:label="Favorite" tools:layout="@layout/fragment_favorite"/>

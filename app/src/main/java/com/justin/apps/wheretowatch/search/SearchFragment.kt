@@ -13,6 +13,7 @@ import android.view.*
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.navigation.findNavController
 import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.adapter.MediaRecyclerAdapter
 import com.justin.apps.wheretowatch.base.BaseActivity
