@@ -11,8 +11,9 @@
             tools:layout="@layout/search_fragment"
     >
         <action android:id="@+id/action_actionSearch_to_actionFavorite" app:destination="@+id/actionFavorite"
-                app:enterAnim="@anim/slide_to_right" app:exitAnim="@anim/slide_to_right"
-                app:popExitAnim="@anim/slide_to_right"/>
+                app:enterAnim="@anim/slide_from_left" app:exitAnim="@anim/slide_to_right"
+                app:popExitAnim="@anim/slide_to_right" app:popUpTo="@+id/welcomeFragment" app:popUpToInclusive="false"
+                app:launchSingleTop="true"/>
     </fragment>
     <activity android:id="@+id/baseActivity2" android:name="com.justin.apps.wheretowatch.base.BaseActivity"
               android:label="BaseActivity"/>
@@ -22,11 +23,12 @@
                 app:destination="@id/actionSearch"
                 app:enterAnim="@anim/slide_from_right"
 
-                app:launchSingleTop="true"/>
+                app:launchSingleTop="true" app:popUpTo="@+id/welcomeFragment" app:popUpToInclusive="false"/>
         <action android:id="@+id/action_welcomeFragment_to_favoriteFragment"
                 app:destination="@+id/actionFavorite"
-                app:enterAnim="@anim/slide_to_right"
-        />
+                app:enterAnim="@anim/slide_from_left"
+                app:exitAnim="@anim/slide_to_right" app:popExitAnim="@anim/slide_to_right"
+                app:popUpTo="@+id/welcomeFragment" app:popUpToInclusive="false" app:launchSingleTop="true"/>
     </fragment>
     <fragment android:id="@+id/actionFavorite" android:name="com.justin.apps.wheretowatch.favorite.FavoriteFragment"
               android:label="Favorite" tools:layout="@layout/fragment_favorite">
