@@ -55,6 +55,7 @@ class SearchFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         viewModel.freshSearch = false
+        (activity as BaseActivity).showAppBarLayout()
     }
 
     override fun onCreateView(
@@ -80,7 +81,7 @@ class SearchFragment : Fragment() {
         val searchItem = menu?.findItem(R.id.search_view)
         val searchView = searchItem?.actionView as SearchView
 
-        (searchView.findViewById<EditText>(android.support.v7.appcompat.R.id.search_src_text)).setHintTextColor(
+        (searchView.findViewById<View>(android.support.v7.appcompat.R.id.search_src_text) as EditText).setHintTextColor(
             ContextCompat.getColor(
                 this.context!!, R.color.appBarText
             )

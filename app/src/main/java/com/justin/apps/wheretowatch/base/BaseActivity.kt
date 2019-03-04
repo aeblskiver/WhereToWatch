@@ -2,15 +2,18 @@ package com.justin.apps.wheretowatch.base
 
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import android.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.justin.apps.wheretowatch.R
+import com.justin.apps.wheretowatch.WelcomeFragment
 import com.justin.apps.wheretowatch.model.Model
 import com.justin.apps.wheretowatch.repository.MediaRepository
 import kotlinx.android.synthetic.main.activity_main.*
@@ -26,6 +29,7 @@ class BaseActivity : AppCompatActivity(), FavoriteClickListener {
     val TAG = "BaseActivity"
     val BUNDLE_KEY_FRESH = "freshSearch"
     private lateinit var appBarConfiguration: AppBarConfiguration
+    lateinit var appBarLayout: AppBarLayout
     private lateinit var navController: NavController
     lateinit var sharedViewModel: SharedViewModel
     lateinit var bottomNav: BottomNavigationView
@@ -37,6 +41,7 @@ class BaseActivity : AppCompatActivity(), FavoriteClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         bottomNav = findViewById(R.id.bottomNavigationView)
+        appBarLayout = toolbar_layout
 
         setSupportActionBar(findViewById(R.id.toolbar_main))
 
@@ -64,7 +69,10 @@ class BaseActivity : AppCompatActivity(), FavoriteClickListener {
             = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.actionFavorite -> {
-                navController.navigate(R.id.actionFavorite)
+                when (navController.currentDestination?.id) {
+                    R.id.welcomeFragment -> navController.navigate(R.id.action_welcomeFragment_to_favoriteFragment)
+                    R.id.actionSearch -> navController.navigate(R.id.action_actionSearch_to_actionFavorite)
+                }
             }
             R.id.actionSearch -> {
                 navController.navigate(R.id.actionSearch)
@@ -84,6 +92,11 @@ class BaseActivity : AppCompatActivity(), FavoriteClickListener {
             sharedViewModel.insert(media)
         }
     }
+
+    fun showAppBarLayout() {
+        appBarLayout.setExpanded(true)
+    }
+
 
 
     override fun onSupportNavigateUp() = findNavController(R.id.fragment_host).navigateUp()

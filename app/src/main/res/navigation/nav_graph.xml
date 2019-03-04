@@ -9,19 +9,27 @@
             android:name="com.justin.apps.wheretowatch.search.SearchFragment"
             android:label="Search"
             tools:layout="@layout/search_fragment"
-    />
+    >
+        <action android:id="@+id/action_actionSearch_to_actionFavorite" app:destination="@+id/actionFavorite"
+                app:enterAnim="@anim/slide_to_right" app:exitAnim="@anim/slide_to_right"
+                app:popExitAnim="@anim/slide_to_right"/>
+    </fragment>
     <activity android:id="@+id/baseActivity2" android:name="com.justin.apps.wheretowatch.base.BaseActivity"
               android:label="BaseActivity"/>
     <fragment android:id="@+id/welcomeFragment" android:name="com.justin.apps.wheretowatch.WelcomeFragment"
               android:label="WelcomeFragment">
-        <action android:id="@+id/action_welcomeFragment_to_searchFragment" app:destination="@id/actionSearch"
-                app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim"
-                app:popEnterAnim="@anim/nav_default_pop_enter_anim" app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
-        <action android:id="@+id/action_welcomeFragment_to_favoriteFragment" app:destination="@id/actionFavorite"
-                app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim"
-                app:popExitAnim="@anim/nav_default_pop_exit_anim" app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+        <action android:id="@+id/action_welcomeFragment_to_searchFragment"
+                app:destination="@id/actionSearch"
+                app:enterAnim="@anim/slide_from_right"
+
+                app:launchSingleTop="true"/>
+        <action android:id="@+id/action_welcomeFragment_to_favoriteFragment"
+                app:destination="@+id/actionFavorite"
+                app:enterAnim="@anim/slide_to_right"
+        />
     </fragment>
     <fragment android:id="@+id/actionFavorite" android:name="com.justin.apps.wheretowatch.favorite.FavoriteFragment"
-              android:label="Favorite" tools:layout="@layout/fragment_favorite"/>
+              android:label="Favorite" tools:layout="@layout/fragment_favorite">
+    </fragment>
 
 </navigation>

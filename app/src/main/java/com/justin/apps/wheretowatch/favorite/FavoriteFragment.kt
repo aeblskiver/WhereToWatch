@@ -40,4 +40,9 @@ class FavoriteFragment : Fragment() {
         })
         super.onViewCreated(view, savedInstanceState)
     }
+
+    override fun onPause() {
+        super.onPause()
+        (activity as BaseActivity).showAppBarLayout()
+    }
 }

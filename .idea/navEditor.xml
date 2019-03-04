@@ -31,7 +31,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_actionSearch_to_nav_graph">
+                            <entry key="action_actionSearch_to_actionFavorite">
                               <value>
                                 <LayoutPositions />
                               </value>
