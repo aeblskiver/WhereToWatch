@@ -75,7 +75,10 @@ class BaseActivity : AppCompatActivity(), FavoriteClickListener {
                 }
             }
             R.id.actionSearch -> {
-                navController.navigate(R.id.actionSearch)
+                when (navController.currentDestination?.id) {
+                    R.id.welcomeFragment -> navController.navigate(R.id.action_welcomeFragment_to_searchFragment)
+                    R.id.actionFavorite -> navController.navigate(R.id.action_actionFavorite_to_actionSearch)
+                }
             }
             R.id.navigation_filter -> {
                 return@OnNavigationItemSelectedListener true

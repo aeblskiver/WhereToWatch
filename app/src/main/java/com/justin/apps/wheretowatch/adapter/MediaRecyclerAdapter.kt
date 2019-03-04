@@ -26,7 +26,7 @@ class MediaRecyclerAdapter(var rvListener: FavoriteClickListener, var isFavorite
     private lateinit var rv: RecyclerView
 
     fun setList(list: List<Model.Media>) {
-        this.list = emptyList()
+//        this.list = emptyList()
         this.list = list
         notifyDataSetChanged()
     }
@@ -103,7 +103,7 @@ class MediaRecyclerAdapter(var rvListener: FavoriteClickListener, var isFavorite
         val ivFavorite: ImageView = view.iv_favorite
         val linearLayoutLocations: LinearLayout = view.linearlayout_locations
         val clSubCard: ConstraintLayout = view.cl_subcard
-        var isFavorite = false
+        var isFavorite = isFavoriteFragment
         val imageResource: Int
             get() {
                 return when (isFavorite) {

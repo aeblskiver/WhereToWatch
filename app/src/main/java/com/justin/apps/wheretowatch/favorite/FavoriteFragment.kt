@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,14 +12,21 @@ import android.view.ViewGroup
 import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.adapter.MediaRecyclerAdapter
 import com.justin.apps.wheretowatch.base.BaseActivity
+import com.justin.apps.wheretowatch.base.FavoriteClickListener
+import com.justin.apps.wheretowatch.base.SharedViewModel
+import com.justin.apps.wheretowatch.model.Model
 import kotlinx.android.synthetic.main.fragment_favorite.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 /**
  *  Fragment for displaying the user's favorite shows/movies. These items are saved in and pulled from the Room
  *  database.
  */
-class FavoriteFragment : Fragment() {
+class FavoriteFragment : Fragment(), FavoriteClickListener {
     private val TAG = "FavoriteFragment"
+    private lateinit var rv: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,10 +37,10 @@ class FavoriteFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val rv = recyclerview_favorite_list
+        rv = recyclerview_favorite_list
         rv.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = MediaRecyclerAdapter(activity as BaseActivity, true)
+            adapter = MediaRecyclerAdapter(this@FavoriteFragment, true)
         }
         (activity as BaseActivity).sharedViewModel.favoriteList.observe(this, Observer {
             Log.d(TAG, "List: $it")
@@ -45,4 +53,12 @@ class FavoriteFragment : Fragment() {
         super.onPause()
         (activity as BaseActivity).showAppBarLayout()
     }
+
+    override fun onClick(media: Model.Media?, favorite: Boolean) {
+        GlobalScope.launch(Dispatchers.IO) {
+            Log.d(TAG, "Attempting to remove ${media?.name}")
+            (activity as BaseActivity).sharedViewModel.remove(media)
+        }
+    }
+
 }
