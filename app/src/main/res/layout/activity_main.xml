@@ -7,7 +7,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context=".base.BaseActivity">
+        tools:context=".base.BaseActivity"
+        style="@style/AppTheme">
 
 <android.support.design.widget.CoordinatorLayout
         android:id="@+id/container"
@@ -55,8 +56,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@color/colorPrimary"
-            app:itemTextColor="@color/appBarText"
-            app:itemIconTint="@color/appBarText"
+            app:itemTextColor="@drawable/bottom_navigation_selector"
+            app:itemIconTint="@drawable/bottom_navigation_selector"
             app:menu="@menu/navigation" app:elevation="8dp"
             app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
             android:layout_alignParentBottom="true"

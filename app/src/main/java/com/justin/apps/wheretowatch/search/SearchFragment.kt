@@ -18,6 +18,8 @@ import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.adapter.MediaRecyclerAdapter
 import com.justin.apps.wheretowatch.base.BaseActivity
 import com.justin.apps.wheretowatch.base.FavoriteClickListener
+import com.justin.apps.wheretowatch.base.SharedViewModel
+import com.justin.apps.wheretowatch.base.SharedViewModelFactory
 import com.justin.apps.wheretowatch.model.Model.Media
 import com.justin.apps.wheretowatch.repository.MediaRepository
 import io.reactivex.disposables.Disposable
@@ -34,10 +36,12 @@ class SearchFragment : Fragment() {
     private lateinit var recyclerAdapter: MediaRecyclerAdapter
     private lateinit var loadingIndicator: ProgressBar
     private lateinit var viewModel: SearchViewModel
+    private lateinit var sharedViewModel: SharedViewModel
     private lateinit var favoriteClickListener: FavoriteClickListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModel = ViewModelProviders.of(this, SearchViewModelFactory(MediaRepository)).get(SearchViewModel::class.java)
+        sharedViewModel = ViewModelProviders.of(this, SharedViewModelFactory(MediaRepository)).get(SharedViewModel::class.java)
         favoriteClickListener = activity as BaseActivity
 
         savedInstanceState?.let {

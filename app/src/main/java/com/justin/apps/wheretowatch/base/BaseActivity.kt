@@ -1,12 +1,14 @@
 package com.justin.apps.wheretowatch.base
 
 import android.arch.lifecycle.ViewModelProviders
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
