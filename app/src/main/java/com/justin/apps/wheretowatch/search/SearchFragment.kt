@@ -8,23 +8,17 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
-import android.util.Log
 import android.view.*
 import android.widget.EditText
 import android.widget.ProgressBar
-import android.widget.Toast
-import androidx.navigation.findNavController
 import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.adapter.MediaRecyclerAdapter
 import com.justin.apps.wheretowatch.base.BaseActivity
 import com.justin.apps.wheretowatch.base.FavoriteClickListener
 import com.justin.apps.wheretowatch.base.SharedViewModel
 import com.justin.apps.wheretowatch.base.SharedViewModelFactory
-import com.justin.apps.wheretowatch.model.Model.Media
 import com.justin.apps.wheretowatch.repository.MediaRepository
-import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.search_fragment.*
-import kotlinx.android.synthetic.main.search_fragment.view.*
+import kotlinx.android.synthetic.main.fragment_search.view.*
 
 /**
  *  Fragment where users can search for shows/movies. Uses the network API to make requests.
@@ -66,7 +60,7 @@ class SearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-       return  inflater.inflate(R.layout.search_fragment, container, false)
+       return  inflater.inflate(R.layout.fragment_search, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -118,9 +112,14 @@ class SearchFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
         }
         viewModel.mediaList2.observe(this, Observer {
-            recyclerAdapter.setList(it ?: emptyList())
-            recyclerAdapter.notifyDataSetChanged()
             hideLoading()
+            if (it.isNullOrEmpty()) {
+                val dialog = NoResultsDialogFragment()
+                dialog.show(fragmentManager, "NoResultsDialogFragment")
+            } else {
+                recyclerAdapter.setList(it)
+                recyclerAdapter.notifyDataSetChanged()
+            }
         })
     }
 

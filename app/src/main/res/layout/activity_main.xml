@@ -44,7 +44,7 @@
             android:layout_height="match_parent"
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_graph"
-            tools:layout="@layout/welcome_fragment"/>
+            tools:layout="@layout/fragment_welcome"/>
 
     </FrameLayout>
 

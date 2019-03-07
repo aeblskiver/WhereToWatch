@@ -8,7 +8,7 @@
             android:id="@+id/actionSearch"
             android:name="com.justin.apps.wheretowatch.search.SearchFragment"
             android:label="Search"
-            tools:layout="@layout/search_fragment"
+            tools:layout="@layout/fragment_search"
     >
         <action android:id="@+id/action_actionSearch_to_actionFavorite" app:destination="@+id/actionFavorite"
                 app:enterAnim="@anim/slide_from_left" app:exitAnim="@anim/slide_to_right"
@@ -16,7 +16,7 @@
                 app:launchSingleTop="true" app:popEnterAnim="@anim/slide_from_left"/>
     </fragment>
     <fragment android:id="@+id/welcomeFragment" android:name="com.justin.apps.wheretowatch.WelcomeFragment"
-              android:label="WelcomeFragment">
+    >
         <action android:id="@+id/action_welcomeFragment_to_searchFragment"
                 app:destination="@id/actionSearch"
                 app:enterAnim="@anim/slide_from_right"
