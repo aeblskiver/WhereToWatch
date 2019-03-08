@@ -9,14 +9,13 @@
                                     android:layout_height="wrap_content"
                                     android:layout_width="280dp" app:cardElevation="24dp"
                                     app:cardCornerRadius="16dp">
-    xmlns:android="http://schemas.android.com/apk/res/android"/>
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark">
 
         <TextView
-                android:text="No Results"
+                android:text="@string/no_results"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/tv_noResultsCaption"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="24dp"
@@ -25,7 +24,7 @@
                 android:textColor="@color/appBarText" android:typeface="sans" android:textStyle="bold"
                 android:textSize="21sp" android:fontFamily="@font/work_sans_bold"/>
         <TextView
-                android:text="No results found for that search result. Please try another search term."
+                android:text="@string/no_results_body"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_noResults"
@@ -35,7 +34,7 @@
                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
                 android:fontFamily="@font/work_sans"/>
         <TextView
-                android:text="Okay"
+                android:text="@string/okay_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/action_okay" android:layout_marginTop="28dp"

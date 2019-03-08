@@ -5,4 +5,6 @@
     <dimen name="image_view_max_height">24dp</dimen>
     <dimen name="image_view_max_width">32dp</dimen>
     <dimen name="image_view_in_linearlayout">0dp</dimen>
+    <dimen name="padding_left_dialog_title">24dp</dimen>
+    <dimen name="padding_top_dialog_title">19dp</dimen>
 </resources>

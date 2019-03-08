@@ -12,5 +12,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_results">No Results</string>
+    <string name="no_results_body">No results found for that search result. Please try another search term.</string>
+    <string name="okay_button">Okay</string>
+    <string name="welcome_message">Welcome! Search for a show or movie!</string>
 
 </resources>

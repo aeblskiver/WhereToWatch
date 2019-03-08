@@ -16,6 +16,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.WelcomeFragment
+import com.justin.apps.wheretowatch.filter.FilterDialogFragment
 import com.justin.apps.wheretowatch.model.Model
 import com.justin.apps.wheretowatch.repository.MediaRepository
 import kotlinx.android.synthetic.main.activity_main.*
@@ -27,7 +28,16 @@ import kotlinx.coroutines.launch
  *  Activity that forms the base of the app. Uses Navigation components to swap out fragments.
  *  Sets up Bottom Navigation View and top Toolbar.
  */
-class BaseActivity : AppCompatActivity(), FavoriteClickListener {
+class BaseActivity : AppCompatActivity(), FavoriteClickListener, FilterDialogFragment.FilterListener {
+    override fun onFilterSet(choiceSet: Set<FilterDialogFragment.Choice>) {
+        Log.d(TAG, "Activity passed on filter set")
+        Log.d(TAG, "Set of : ${choiceSet.toString()}")
+    }
+
+    override fun onFilterReset() {
+        Log.d(TAG, "Activity passed on filter reset")
+    }
+
     val TAG = "BaseActivity"
     val BUNDLE_KEY_FRESH = "freshSearch"
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -83,7 +93,8 @@ class BaseActivity : AppCompatActivity(), FavoriteClickListener {
                 }
             }
             R.id.navigation_filter -> {
-                return@OnNavigationItemSelectedListener true
+                val dialog = FilterDialogFragment()
+                dialog.show(supportFragmentManager, "Filter Dialog")
             }
         }
         true
