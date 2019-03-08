@@ -29,14 +29,7 @@ import kotlinx.coroutines.launch
  *  Sets up Bottom Navigation View and top Toolbar.
  */
 class BaseActivity : AppCompatActivity(), FavoriteClickListener, FilterDialogFragment.FilterListener {
-    override fun onFilterSet(choiceSet: Set<FilterDialogFragment.Choice>) {
-        Log.d(TAG, "Activity passed on filter set")
-        Log.d(TAG, "Set of : ${choiceSet.toString()}")
-    }
 
-    override fun onFilterReset() {
-        Log.d(TAG, "Activity passed on filter reset")
-    }
 
     val TAG = "BaseActivity"
     val BUNDLE_KEY_FRESH = "freshSearch"
@@ -113,7 +106,15 @@ class BaseActivity : AppCompatActivity(), FavoriteClickListener, FilterDialogFra
         appBarLayout.setExpanded(true)
     }
 
+    override fun onFilterSet(choiceSet: Set<String>) {
+        Log.d(TAG, "Activity passed on filter set")
+        Log.d(TAG, "Set of : ${choiceSet.toString()}")
+        sharedViewModel.setFilter(choiceSet)
+    }
 
+    override fun onFilterReset() {
+        Log.d(TAG, "Activity passed on filter reset")
+    }
 
     override fun onSupportNavigateUp() = findNavController(R.id.fragment_host).navigateUp()
 

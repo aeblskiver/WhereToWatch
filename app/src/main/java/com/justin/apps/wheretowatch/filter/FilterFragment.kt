@@ -1,23 +1,20 @@
 package com.justin.apps.wheretowatch.filter
 
-import android.app.Activity
 import android.content.Context
-import android.net.Uri
-import android.os.Bundle
 import android.content.SharedPreferences
-import android.os.Parcel
-import android.os.Parcelable
+import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.CompoundButton
 import com.justin.apps.wheretowatch.R
-import kotlinx.android.synthetic.main.activity_main.*
+import com.justin.apps.wheretowatch.model.Model
+import com.justin.apps.wheretowatch.util.constants.AMAZON_INSTANT_DISPLAY_NAME
+import com.justin.apps.wheretowatch.util.constants.AMAZON_PRIME_DISPLAY_NAME
+import com.justin.apps.wheretowatch.util.constants.NETFLIX_DISPLAY_NAME
 import kotlinx.android.synthetic.main.fragment_filter.*
-import java.io.Serializable
 
 class FilterDialogFragment : DialogFragment() {
     private val TAG = "FilterDialogFragment"
@@ -28,17 +25,10 @@ class FilterDialogFragment : DialogFragment() {
     private val keyIsAmazonInstant = "isAmazonInstant"
     private val keyIsNetflix = "isNetflix"
     private lateinit var filterListener: FilterListener
-    private val choiceSet: MutableSet<Choice> = mutableSetOf()
+    private val choiceSet: MutableSet<String> = mutableSetOf()
     private var PREF_PRIVATE_MODE = 0
     private val PREF_NAME = "where-to-watch"
     private lateinit var sharedPreferences: SharedPreferences
-
-    enum class Choice{
-        NETFLIX,
-        AMAZON_PRIME,
-        AMAZON_INSTANT,
-        NOTHING
-    }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -47,6 +37,10 @@ class FilterDialogFragment : DialogFragment() {
             isAmazonPrime = sharedPreferences.getBoolean(keyIsAmazonPrime, false)
             isAmazonInstant = sharedPreferences.getBoolean(keyIsAmazonInstant, false)
             isNetflix = sharedPreferences.getBoolean(keyIsNetflix, false)
+
+            if (isAmazonPrime) choiceSet.add(AMAZON_PRIME_DISPLAY_NAME)
+            if (isAmazonInstant) choiceSet.add(AMAZON_INSTANT_DISPLAY_NAME)
+            if (isNetflix) choiceSet.add(NETFLIX_DISPLAY_NAME)
         }
         filterListener = activity as FilterListener
     }
@@ -84,11 +78,15 @@ class FilterDialogFragment : DialogFragment() {
 
         action_reset_filter.setOnClickListener {
             Log.d(TAG, "Reset clicked")
+            checkBoxArray.forEach { it.isChecked = false }
         }
 
         action_set_filter.setOnClickListener {
             Log.d(TAG, "Set filter clicked")
+
+
             filterListener.onFilterSet(choiceSet)
+            dismiss()
         }
     }
 
@@ -102,17 +100,16 @@ class FilterDialogFragment : DialogFragment() {
     }
 
 
-    private fun getChoiceFromCheckbox(button: CompoundButton): Choice {
+    private fun getChoiceFromCheckbox(button: CompoundButton): String {
         return when (button.id) {
-            cb_amazon_instant.id -> Choice.AMAZON_INSTANT
-            cb_amazon_prime.id -> Choice.AMAZON_PRIME
-            cb_netflix.id -> Choice.NETFLIX
-            else -> Choice.NOTHING
+            cb_amazon_instant.id -> AMAZON_INSTANT_DISPLAY_NAME
+            cb_amazon_prime.id -> AMAZON_PRIME_DISPLAY_NAME
+            else -> NETFLIX_DISPLAY_NAME
         }
     }
 
     interface FilterListener {
-        fun onFilterSet(choiceSet: Set<Choice>)
+        fun onFilterSet(choiceSet: Set<String>)
         fun onFilterReset()
     }
 }

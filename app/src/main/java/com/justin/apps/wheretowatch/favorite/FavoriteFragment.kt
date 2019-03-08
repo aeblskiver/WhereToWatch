@@ -42,10 +42,16 @@ class FavoriteFragment : Fragment(), FavoriteClickListener {
             layoutManager = LinearLayoutManager(context)
             adapter = MediaRecyclerAdapter(this@FavoriteFragment, true)
         }
-        (activity as BaseActivity).sharedViewModel.favoriteList.observe(this, Observer {
-            Log.d(TAG, "List: $it")
+//        (activity as BaseActivity).sharedViewModel.favoriteList.observe(this, Observer {
+//            Log.d(TAG, "List: $it")
+//            (rv.adapter as MediaRecyclerAdapter).setList(it ?: emptyList())
+//        })
+
+        (activity as BaseActivity).sharedViewModel.filteredList.observe(this, Observer {
+                        Log.d(TAG, "List: $it")
             (rv.adapter as MediaRecyclerAdapter).setList(it ?: emptyList())
         })
+
         super.onViewCreated(view, savedInstanceState)
     }
 
