@@ -1,11 +1,13 @@
 package com.justin.apps.wheretowatch.search
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.*
 import android.util.Log
+import com.justin.apps.wheretowatch.base.FilterTrigger
 import com.justin.apps.wheretowatch.model.Model.Media
 import com.justin.apps.wheretowatch.repository.MediaRepository
+import com.justin.apps.wheretowatch.util.constants.AMAZON_INSTANT_DISPLAY_NAME
+import com.justin.apps.wheretowatch.util.constants.AMAZON_PRIME_DISPLAY_NAME
+import com.justin.apps.wheretowatch.util.constants.NETFLIX_DISPLAY_NAME
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -16,7 +18,7 @@ import io.reactivex.schedulers.Schedulers
 class SearchViewModel(val repo: MediaRepository) : ViewModel() {
     private val TAG = "SearchViewModel"
 
-    var mediaList2: MutableLiveData<List<Media>> = MutableLiveData()
+    var mediaList: MutableLiveData<List<Media>> = MutableLiveData()
     var loading = false
     var freshSearch = false
     var disposable: Disposable? = null
@@ -30,7 +32,7 @@ class SearchViewModel(val repo: MediaRepository) : ViewModel() {
     }
 
     private fun setList(list: List<Media>) {
-        mediaList2.postValue(list)
+        mediaList.postValue(list)
     }
 
     private fun onError(e: Throwable) {

@@ -110,6 +110,7 @@ class BaseActivity : AppCompatActivity(), FavoriteClickListener, FilterDialogFra
         Log.d(TAG, "Activity passed on filter set")
         Log.d(TAG, "Set of : ${choiceSet.toString()}")
         sharedViewModel.setFilter(choiceSet)
+
     }
 
     override fun onFilterReset() {
