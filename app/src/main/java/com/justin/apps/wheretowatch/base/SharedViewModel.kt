@@ -1,23 +1,18 @@
 package com.justin.apps.wheretowatch.base
 
 import android.arch.lifecycle.*
-import com.bumptech.glide.Glide.init
-import com.justin.apps.wheretowatch.filter.FilterDialogFragment
 import com.justin.apps.wheretowatch.model.Model.Media
 import com.justin.apps.wheretowatch.repository.MediaRepository
 import com.justin.apps.wheretowatch.util.constants.AMAZON_INSTANT_DISPLAY_NAME
 import com.justin.apps.wheretowatch.util.constants.AMAZON_PRIME_DISPLAY_NAME
 import com.justin.apps.wheretowatch.util.constants.NETFLIX_DISPLAY_NAME
 import io.reactivex.disposables.Disposable
-import java.util.Locale.filter
 
 class SharedViewModel(val repo: MediaRepository): ViewModel() {
     private var disposable: Disposable? = null
     private var choiceSet: MutableLiveData<Set<String>> = MutableLiveData()
-    lateinit var favoriteList: LiveData<List<Media>>
-    var filteredList: LiveData<List<Media>> = Transformations.switchMap(choiceSet) { choices -> filterList(choices) }
-
-
+    private var favoriteList: LiveData<List<Media>> = repo.loadFromDatabase()
+    private val filterTrigger = FilterTrigger<List<Media>, Set<String>>(favoriteList, choiceSet)
 
     init {
         load()
@@ -25,23 +20,30 @@ class SharedViewModel(val repo: MediaRepository): ViewModel() {
 
     }
 
-    private fun filterList(choiceSet: Set<String>): LiveData<List<Media>> {
+    var filteredList: LiveData<List<Media>> = Transformations.switchMap(filterTrigger) { choices -> filterList(choices) }
+
+    private fun filterList(p: Pair<List<Media>?, Set<String>?>): LiveData<List<Media>> {
         val result = MutableLiveData<List<Media>>()
-        val list = favoriteList.value
-        result.value = list?.filter { media ->
-            var found = false
-            media.locations.forEach { locations ->
-                if (choiceSet.contains(locations.name)) found = true
+        if (p.first != null && p.second != null) {
+            val filteredList = p.first!!.filter { media ->
+                var found = false
+                media.locations.forEach { l ->
+                    if (p.second!!.contains(l.name)) found = true
+                }
+                found
             }
-            found
+
+
+            result.postValue(filteredList)
         }
+
         return result
     }
 
 
     fun load() {
-//        favoriteList = repo.loadFromDatabase()
-        filteredList = repo.loadFromDatabase()
+        favoriteList = repo.loadFromDatabase()
+        //filteredList = repo.loadFromDatabase()
     }
 
     fun insert(media: Media?) {
@@ -67,5 +69,14 @@ class SharedViewModelFactory(private val repo: MediaRepository) : ViewModelProvi
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
         return SharedViewModel(repo) as T
+    }
+}
+
+// Using generics to subclass mediator live data.
+// Taken from https://stackoverflow.com/questions/49493772/mediatorlivedata-or-switchmap-transformation-with-multiple-parameters
+class FilterTrigger<A, B>(a: LiveData<A>, b: LiveData<B>): MediatorLiveData<Pair<A?, B?>>() {
+    init {
+        addSource(a) { value = it to b.value }
+        addSource(b) { value = a.value to it }
     }
 }
