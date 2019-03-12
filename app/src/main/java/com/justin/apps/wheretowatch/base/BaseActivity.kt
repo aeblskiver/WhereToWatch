@@ -69,6 +69,7 @@ class BaseActivity : AppCompatActivity(), FavoriteClickListener, FilterDialogFra
 
     /**
      *  Listens for selections in Bottom Navigation View and changes into the proper fragment.
+     *  R.id.navigation_filter returns false because I don't want the current selection to be de-selected
      */
     private val mOnNavigationItemSelectedListener
             = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -78,19 +79,25 @@ class BaseActivity : AppCompatActivity(), FavoriteClickListener, FilterDialogFra
                     R.id.welcomeFragment -> navController.navigate(R.id.action_welcomeFragment_to_favoriteFragment)
                     R.id.actionSearch -> navController.navigate(R.id.action_actionSearch_to_actionFavorite)
                 }
+                true
             }
             R.id.actionSearch -> {
                 when (navController.currentDestination?.id) {
                     R.id.welcomeFragment -> navController.navigate(R.id.action_welcomeFragment_to_searchFragment)
                     R.id.actionFavorite -> navController.navigate(R.id.action_actionFavorite_to_actionSearch)
                 }
+                true
             }
             R.id.navigation_filter -> {
-                val dialog = FilterDialogFragment()
+                if (navController.currentDestination?.id == R.id.actionFavorite) {
+                    val dialog = FilterDialogFragment()
                 dialog.show(supportFragmentManager, "Filter Dialog")
+                }
+                false
             }
+            else -> true
         }
-        true
+
     }
 
     /**

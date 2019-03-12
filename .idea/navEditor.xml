@@ -50,6 +50,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="filterDialogFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-950" />
+                            <option name="y" value="-374" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="welcomeFragment">
                     <value>
                       <LayoutPositions>

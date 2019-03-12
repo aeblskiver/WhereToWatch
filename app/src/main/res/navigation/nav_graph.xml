@@ -33,6 +33,13 @@
               android:label="Favorite" tools:layout="@layout/fragment_favorite">
         <action android:id="@+id/action_actionFavorite_to_actionSearch" app:destination="@id/actionSearch"
                 app:enterAnim="@anim/slide_from_right" app:exitAnim="@anim/slide_to_left"/>
+        <action android:id="@+id/action_actionFavorite_to_filterDialogFragment"
+                app:destination="@id/filterDialogFragment" app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim" app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" app:popUpTo="@+id/actionFavorite"/>
     </fragment>
+    <fragment android:id="@+id/filterDialogFragment"
+              android:name="com.justin.apps.wheretowatch.filter.FilterDialogFragment" android:label="fragment_filter"
+              tools:layout="@layout/fragment_filter"/>
 
 </navigation>
