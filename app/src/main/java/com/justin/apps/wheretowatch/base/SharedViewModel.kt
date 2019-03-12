@@ -3,6 +3,9 @@ package com.justin.apps.wheretowatch.base
 import android.arch.lifecycle.*
 import com.justin.apps.wheretowatch.model.Model.Media
 import com.justin.apps.wheretowatch.repository.MediaRepository
+import com.justin.apps.wheretowatch.util.constants.AMAZON_INSTANT_DISPLAY_NAME
+import com.justin.apps.wheretowatch.util.constants.AMAZON_PRIME_DISPLAY_NAME
+import com.justin.apps.wheretowatch.util.constants.NETFLIX_DISPLAY_NAME
 import io.reactivex.disposables.Disposable
 
 class SharedViewModel(val repo: MediaRepository): ViewModel() {
@@ -16,7 +19,9 @@ class SharedViewModel(val repo: MediaRepository): ViewModel() {
     // Called when the filterTrigger is called due to a change in either the favoriteList or the choiceSet
     private fun filterList(p: Pair<List<Media>?, Set<String>?>): LiveData<List<Media>> {
         val result = MutableLiveData<List<Media>>()
-        if (p.first != null && p.second != null) {
+        if (p.second == null || p.second!!.isEmpty()) {
+            result.value = p.first
+        } else if (p.first != null && p.second != null) {
             val filteredList = p.first!!.filter { media ->
                 var found = false
                 media.locations.forEach { l ->
