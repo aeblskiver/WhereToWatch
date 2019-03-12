@@ -2,6 +2,8 @@
 
 A personal project Android app to help me find where to stream my favorite TV shows and movies using the [Utelly API](https://www.utelly.com/).
 
+![](https://i.imgur.com/zMOJ09R.mp4)
+
 ## Getting Started
 
 This is just the source code (no apk). Not included is the API key needed to use the API service, you can get your own [here](https://rapidapi.com/utelly/api/utelly).
