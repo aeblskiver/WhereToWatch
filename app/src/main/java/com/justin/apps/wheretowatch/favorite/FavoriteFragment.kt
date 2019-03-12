@@ -13,7 +13,6 @@ import com.justin.apps.wheretowatch.R
 import com.justin.apps.wheretowatch.adapter.MediaRecyclerAdapter
 import com.justin.apps.wheretowatch.base.BaseActivity
 import com.justin.apps.wheretowatch.base.FavoriteClickListener
-import com.justin.apps.wheretowatch.base.SharedViewModel
 import com.justin.apps.wheretowatch.model.Model
 import kotlinx.android.synthetic.main.fragment_favorite.*
 import kotlinx.coroutines.Dispatchers

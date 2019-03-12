@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import com.justin.apps.wheretowatch.R
-import com.justin.apps.wheretowatch.model.Model
 import com.justin.apps.wheretowatch.util.constants.AMAZON_INSTANT_DISPLAY_NAME
 import com.justin.apps.wheretowatch.util.constants.AMAZON_PRIME_DISPLAY_NAME
 import com.justin.apps.wheretowatch.util.constants.NETFLIX_DISPLAY_NAME

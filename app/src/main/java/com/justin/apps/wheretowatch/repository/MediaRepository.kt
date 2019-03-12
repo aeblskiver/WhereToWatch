@@ -3,7 +3,6 @@ package com.justin.apps.wheretowatch.repository
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
-import com.justin.apps.wheretowatch.base.App
 import com.justin.apps.wheretowatch.db.MediaRoomDatabase
 import com.justin.apps.wheretowatch.model.Model.Media
 import com.justin.apps.wheretowatch.network.MediaApi

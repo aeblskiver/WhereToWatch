@@ -1,21 +1,16 @@
 package com.justin.apps.wheretowatch.base
 
 import android.arch.lifecycle.ViewModelProviders
-import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.View
-import android.view.WindowManager
-import android.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.justin.apps.wheretowatch.R
-import com.justin.apps.wheretowatch.WelcomeFragment
 import com.justin.apps.wheretowatch.filter.FilterDialogFragment
 import com.justin.apps.wheretowatch.model.Model
 import com.justin.apps.wheretowatch.repository.MediaRepository

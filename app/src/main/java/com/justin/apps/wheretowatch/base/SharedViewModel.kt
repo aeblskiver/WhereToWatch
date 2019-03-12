@@ -3,9 +3,6 @@ package com.justin.apps.wheretowatch.base
 import android.arch.lifecycle.*
 import com.justin.apps.wheretowatch.model.Model.Media
 import com.justin.apps.wheretowatch.repository.MediaRepository
-import com.justin.apps.wheretowatch.util.constants.AMAZON_INSTANT_DISPLAY_NAME
-import com.justin.apps.wheretowatch.util.constants.AMAZON_PRIME_DISPLAY_NAME
-import com.justin.apps.wheretowatch.util.constants.NETFLIX_DISPLAY_NAME
 import io.reactivex.disposables.Disposable
 
 class SharedViewModel(val repo: MediaRepository): ViewModel() {
