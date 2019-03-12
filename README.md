@@ -2,7 +2,7 @@
 
 A personal project Android app to help me find where to stream my favorite TV shows and movies using the [Utelly API](https://www.utelly.com/).
 
-![](https://i.imgur.com/zMOJ09R.gifv)
+![](https://i.imgur.com/zMOJ09R.gif)
 
 ## Getting Started
 
